@@ -7,28 +7,215 @@
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #f4f2ed; font-family: "DM Sans", sans-serif; font-weight: 300; color: #12130f; }
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(22,40,26,0.98); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.07); }
-    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 58px; }
-    .nav-brand { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    :root {
+      --ink:         #12130f;
+      --ink-mid:     #2c2e27;
+      --ink-light:   #5a5d52;
+      --stone:       #8a8c83;
+      --mist:        #c8cac0;
+      --paper:       #f4f2ed;
+      --paper-warm:  #ede9e0;
+      --white:       #fafaf7;
+      --green-deep:  #1c3020;
+      --green-mid:   #2e4d34;
+      --green-sage:  #5a7d5f;
+      --green-pale:  #a8c5ab;
+      --rule:        rgba(18,19,15,0.1);
+      --rule-heavy:  rgba(18,19,15,0.2);
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "DM Sans", sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: rgba(22,40,26,0.98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+    }
+
     .nav-logo { height: 26px; width: auto; display: block; }
     .nav-divider { width: 1px; height: 22px; background: rgba(255,255,255,0.12); }
-    .nav-title strong { font-family: "Lora", serif; font-size: 0.9rem; font-weight: 600; color: #fafaf7; line-height: 1.2; display: block; }
-    .nav-title span { font-size: 0.6rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: #5a7d5f; }
+
+    .nav-title strong {
+      font-family: "Lora", serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.2;
+      display: block;
+    }
+
+    .nav-title span {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-sage);
+    }
+
     nav ul { list-style: none; display: flex; align-items: center; }
-    nav ul li a { display: flex; align-items: center; height: 58px; padding: 0 1rem; text-decoration: none; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(200,210,200,0.65); border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
-    nav ul li a:hover, nav ul li a.active { color: #fafaf7; border-bottom-color: #5a7d5f; }
-    .page-header { background: #1c3020; padding: 8rem 2.5rem 4rem; }
+
+    nav ul li a {
+      display: flex;
+      align-items: center;
+      height: 58px;
+      padding: 0 1rem;
+      text-decoration: none;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(200,210,200,0.65);
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    nav ul li a:hover, nav ul li a.active {
+      color: var(--white);
+      border-bottom-color: var(--green-sage);
+    }
+
+    /* HEADER */
+    .page-header {
+      background: var(--green-deep);
+      padding: 8rem 2.5rem 4rem;
+    }
+
     .page-header-inner { max-width: 1200px; margin: 0 auto; }
-    .page-eyebrow { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: #5a7d5f; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem; }
-    .page-eyebrow::before { content: ""; display: inline-block; width: 1.8rem; height: 1px; background: #5a7d5f; }
-    .page-title { font-family: "Lora", serif; font-size: clamp(2rem,3.5vw,3rem); font-weight: 600; color: #fafaf7; }
-    .conteudo { max-width: 1200px; margin: 0 auto; padding: 5rem 2.5rem; }
-    .em-breve { font-size: 0.85rem; color: #8a8c83; font-style: italic; }
-    @media (max-width: 900px) { nav ul { display: none; } .nav-inner { padding: 0 1.5rem; } }
+
+    .page-eyebrow {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green-sage);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .page-eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 1.8rem;
+      height: 1px;
+      background: var(--green-sage);
+    }
+
+    .page-title {
+      font-family: "Lora", serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.15;
+    }
+
+    /* CONTEÚDO */
+    .conteudo {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 5rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    .bloco { display: flex; flex-direction: column; gap: 0.8rem; }
+
+    .bloco-label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--stone);
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--rule-heavy);
+    }
+
+    .bloco-titulo {
+      font-family: "Lora", serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-top: 0.2rem;
+    }
+
+    .bloco-texto {
+      font-size: 0.88rem;
+      color: var(--ink-mid);
+      line-height: 1.9;
+    }
+
+    .secoes-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .secao-item {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.88rem;
+      color: var(--ink-mid);
+      line-height: 1.7;
+    }
+
+    .secao-item:first-child { border-top: 1px solid var(--rule); }
+
+    .secao-item strong {
+      font-weight: 500;
+      color: var(--ink);
+      font-family: "Lora", serif;
+      font-size: 0.95rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      nav ul { display: none; }
+      .nav-inner { padding: 0 1.5rem; }
+      .page-header { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .conteudo { padding: 3rem 1.5rem; }
+    }
   </style>
 </head>
 <body>
+
 <nav>
   <div class="nav-inner">
     <a class="nav-brand" href="index.html">
@@ -47,14 +234,64 @@
     </ul>
   </div>
 </nav>
+
 <div class="page-header">
   <div class="page-header-inner">
     <p class="page-eyebrow">Como usar</p>
     <h1 class="page-title">Guia do Site</h1>
   </div>
 </div>
+
 <div class="conteudo">
-  <p class="em-breve">Conteúdo em desenvolvimento.</p>
+
+  <div class="bloco reveal">
+    <p class="bloco-label">Sobre o site</p>
+    <p class="bloco-texto">Este site foi desenvolvido como projeto de monitoria da disciplina de Medicina Veterinária de Animais Selvagens da Universidade Federal Fluminense, elaborado pela monitora Bruna Leme Roechow Moses Daddario. O objetivo é oferecer um espaço de apoio aos estudos, acessível a qualquer momento e de qualquer dispositivo.</p>
+  </div>
+
+  <div class="bloco reveal">
+    <p class="bloco-label">O que você encontra aqui</p>
+    <div class="secoes-lista">
+      <div class="secao-item"><strong>Guia do Site:</strong> orientações sobre como navegar e aproveitar os recursos disponíveis.</div>
+      <div class="secao-item"><strong>Atividades Interativas:</strong> flashcards, palavras cruzadas, quiz e jogo da memória para fixação do conteúdo, todos com gabarito ou correção automática.</div>
+      <div class="secao-item"><strong>Dardos Anestésicos:</strong> material sobre confecção e uso de dardos anestésicos, incluindo videoaula e guia ilustrado do procedimento passo a passo.</div>
+      <div class="secao-item"><strong>Produção Científica:</strong> apresentação dos professores da disciplina, Prof. Dr. Sávio Freire Bruno e Profa. Dra. Catia Dejuste de Paula, com informações sobre sua trajetória acadêmica e sua produção científica.</div>
+    </div>
+  </div>
+
+  <div class="bloco reveal">
+    <p class="bloco-label">Sobre as atividades interativas</p>
+    <p class="bloco-texto">As atividades foram desenvolvidas para uso autônomo. Os flashcards mostram a resposta ao virar o card. As palavras cruzadas e o quiz têm correção automática. O aluno pode usar sem acompanhamento do monitor.</p>
+  </div>
+
+  <div class="bloco reveal">
+    <p class="bloco-label">Sobre os dardos anestésicos</p>
+    <p class="bloco-texto">Esta seção reúne material sobre confecção e uso de dardos anestésicos, incluindo videoaula e guia ilustrado do procedimento passo a passo.</p>
+  </div>
+
+  <div class="bloco reveal">
+    <p class="bloco-label">Sobre a produção científica</p>
+    <p class="bloco-texto">Esta seção apresenta os professores da disciplina, Prof. Dr. Sávio Freire Bruno e Profa. Dra. Catia Dejuste de Paula, com informações sobre sua trajetória acadêmica e sua produção científica.</p>
+  </div>
+
+  <div class="bloco reveal">
+    <p class="bloco-label">Como usar</p>
+    <p class="bloco-texto">O site funciona em qualquer dispositivo (celular, tablet ou computador) sem necessidade de cadastro ou login. Basta acessar o link e navegar pelas seções pelo menu no topo da página.</p>
+  </div>
+
 </div>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add("visible"), i * 100);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
+</script>
+
 </body>
 </html>
