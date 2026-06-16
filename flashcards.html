@@ -35,11 +35,116 @@
       flex-direction: column;
     }
 
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: rgba(22,40,26,0.98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+    }
+
+    .nav-logo { height: 26px; width: auto; display: block; }
+    .nav-divider { width: 1px; height: 22px; background: rgba(255,255,255,0.12); }
+
+    .nav-title strong {
+      font-family: "Lora", serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fafaf7;
+      line-height: 1.2;
+      display: block;
+    }
+
+    .nav-title span {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #5a7d5f;
+    }
+
+    nav ul { list-style: none; display: flex; align-items: center; }
+
+    nav ul li a {
+      display: flex;
+      align-items: center;
+      height: 58px;
+      padding: 0 1rem;
+      text-decoration: none;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(200,210,200,0.65);
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    nav ul li a:hover, nav ul li a.active {
+      color: #fafaf7;
+      border-bottom-color: #5a7d5f;
+    }
+
+    /* HEADER */
+    .page-header {
+      background: var(--green-deep);
+      padding: 5rem 2.5rem 2.5rem;
+      margin-top: 58px;
+    }
+
+    .page-header-inner { max-width: 1200px; margin: 0 auto; }
+
+    .page-eyebrow {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green-sage);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .page-eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 1.8rem;
+      height: 1px;
+      background: var(--green-sage);
+    }
+
+    .page-title {
+      font-family: "Lora", serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 600;
+      color: var(--white);
+    }
+
     /* CONTADOR */
     .contador {
       background: var(--white);
       border-bottom: 1px solid var(--rule-heavy);
-      padding: 1.2rem 2rem;
+      padding: 1rem 2rem;
       display: flex;
       align-items: center;
       gap: 0.8rem;
@@ -52,13 +157,13 @@
       align-items: center;
       background: var(--paper-warm);
       border-radius: 50px;
-      padding: 0.6rem 1.2rem;
-      min-width: 70px;
+      padding: 0.5rem 1.1rem;
+      min-width: 65px;
     }
 
     .cont-num {
       font-family: "Lora", serif;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 600;
       color: var(--ink);
       line-height: 1;
@@ -76,21 +181,46 @@
       margin-top: 0.2rem;
     }
 
+    /* CATEGORIAS */
+    .categorias {
+      background: var(--paper-warm);
+      border-bottom: 1px solid var(--rule);
+      padding: 0.8rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .cat-btn {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--ink-light);
+      background: var(--white);
+      border: 1px solid var(--rule-heavy);
+      padding: 0.35rem 0.85rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cat-btn:hover, .cat-btn.ativo {
+      background: var(--green-deep);
+      color: var(--white);
+      border-color: var(--green-deep);
+    }
+
     /* PROGRESSO */
     .progresso-bar {
-      background: var(--paper-warm);
-      padding: 0.7rem 2rem;
+      background: var(--paper);
+      padding: 0.6rem 2rem;
       display: flex;
       align-items: center;
       gap: 1rem;
       border-bottom: 1px solid var(--rule);
     }
 
-    .prog-texto {
-      font-size: 0.72rem;
-      color: var(--stone);
-      white-space: nowrap;
-    }
+    .prog-texto { font-size: 0.72rem; color: var(--stone); white-space: nowrap; }
 
     .prog-linha {
       flex: 1;
@@ -108,20 +238,16 @@
       transition: width 0.3s ease;
     }
 
-    .prog-pct {
-      font-size: 0.72rem;
-      color: var(--stone);
-      white-space: nowrap;
-    }
+    .prog-pct { font-size: 0.72rem; color: var(--stone); white-space: nowrap; }
 
-    /* ÁREA DO CARD */
+    /* CARD */
     .card-area {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 2.5rem 2rem;
+      padding: 2rem 2rem;
     }
 
     .card-wrap {
@@ -141,9 +267,7 @@
       transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
     }
 
-    .card-wrap.virado .card-inner {
-      transform: rotateY(180deg);
-    }
+    .card-wrap.virado .card-inner { transform: rotateY(180deg); }
 
     .card-face {
       position: absolute;
@@ -155,7 +279,6 @@
       border-radius: 8px;
     }
 
-    /* FRENTE */
     .card-frente {
       background: var(--white);
       border: 1px solid var(--rule-heavy);
@@ -173,7 +296,7 @@
 
     .card-frente .card-pergunta {
       font-family: "Lora", serif;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 600;
       color: var(--ink);
       line-height: 1.5;
@@ -186,7 +309,6 @@
       text-align: center;
     }
 
-    /* VERSO */
     .card-verso {
       background: var(--green-deep);
       border: 1px solid rgba(255,255,255,0.06);
@@ -205,14 +327,15 @@
 
     .card-verso .card-resposta {
       font-family: "Lora", serif;
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 400;
       color: var(--white);
       line-height: 1.7;
       flex: 1;
+      overflow-y: auto;
     }
 
-    /* BOTÕES SABIA / NÃO SABIA */
+    /* BOTÕES */
     .sabia-btns {
       display: none;
       gap: 0.6rem;
@@ -241,10 +364,7 @@
       border-color: rgba(138,48,48,0.3);
     }
 
-    .btn-nao:hover {
-      background: #8a3030;
-      color: var(--white);
-    }
+    .btn-nao:hover { background: #8a3030; color: var(--white); }
 
     .btn-sim {
       background: var(--white);
@@ -252,12 +372,8 @@
       border-color: var(--green-pale);
     }
 
-    .btn-sim:hover {
-      background: var(--green-mid);
-      color: var(--white);
-    }
+    .btn-sim:hover { background: var(--green-mid); color: var(--white); }
 
-    /* NAVEGAÇÃO */
     .nav-btns {
       display: flex;
       gap: 0.6rem;
@@ -291,7 +407,6 @@
 
     .btn-virar:hover { background: var(--green-mid); border-color: var(--green-mid); }
 
-    /* AÇÕES */
     .acoes {
       display: flex;
       gap: 0.6rem;
@@ -328,72 +443,11 @@
       color: var(--mist);
       text-align: center;
     }
-  
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
-      background: rgba(22,40,26,0.98);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 58px;
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      text-decoration: none;
-    }
-    .nav-logo { height: 26px; width: auto; display: block; }
-    .nav-divider { width: 1px; height: 22px; background: rgba(255,255,255,0.12); }
-    .nav-title strong {
-      font-family: "Lora", serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #fafaf7;
-      line-height: 1.2;
-      display: block;
-    }
-    .nav-title span {
-      font-size: 0.6rem;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #5a7d5f;
-    }
-    nav ul { list-style: none; display: flex; align-items: center; }
-    nav ul li a {
-      display: flex;
-      align-items: center;
-      height: 58px;
-      padding: 0 1rem;
-      text-decoration: none;
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(200,210,200,0.65);
-      border-bottom: 2px solid transparent;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    nav ul li a:hover, nav ul li a.active {
-      color: #fafaf7;
-      border-bottom-color: #5a7d5f;
-    }
+
     @media (max-width: 900px) {
       nav ul { display: none; }
       .nav-inner { padding: 0 1.5rem; }
     }
-
-    body { padding-top: 58px; }
   </style>
 </head>
 <body>
@@ -410,177 +464,302 @@
     </a>
     <ul>
       <li><a href="guia.html">Guia do Site</a></li>
-      <li><a href="atividades.html">Atividades Interativas</a></li>
+      <li><a href="atividades.html" class="active">Atividades Interativas</a></li>
       <li><a href="dardos.html">Dardos Anestésicos</a></li>
       <li><a href="producao.html">Produção Científica</a></li>
     </ul>
   </div>
 </nav>
 
-  <!-- CONTADOR -->
-  <div class="contador">
-    <div class="cont-item">
-      <span class="cont-num" id="cnt-total">6</span>
-      <span class="cont-label">Total</span>
-    </div>
-    <div class="cont-item">
-      <span class="cont-num verde" id="cnt-sabia">0</span>
-      <span class="cont-label">Sabia</span>
-    </div>
-    <div class="cont-item">
-      <span class="cont-num vermelho" id="cnt-erro">0</span>
-      <span class="cont-label">Erro</span>
-    </div>
-    <div class="cont-item">
-      <span class="cont-num" id="cnt-restam">6</span>
-      <span class="cont-label">Restam</span>
-    </div>
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-eyebrow">Atividades Interativas</p>
+    <h1 class="page-title">Flashcards</h1>
   </div>
+</div>
 
-  <!-- PROGRESSO -->
-  <div class="progresso-bar">
-    <span class="prog-texto" id="prog-texto">1 / 6</span>
-    <div class="prog-linha">
-      <div class="prog-fill" id="prog-fill" style="width: 0%"></div>
-    </div>
-    <span class="prog-pct" id="prog-pct">0%</span>
+<div class="contador">
+  <div class="cont-item">
+    <span class="cont-num" id="cnt-total">0</span>
+    <span class="cont-label">Total</span>
   </div>
+  <div class="cont-item">
+    <span class="cont-num verde" id="cnt-sabia">0</span>
+    <span class="cont-label">Sabia</span>
+  </div>
+  <div class="cont-item">
+    <span class="cont-num vermelho" id="cnt-erro">0</span>
+    <span class="cont-label">Erro</span>
+  </div>
+  <div class="cont-item">
+    <span class="cont-num" id="cnt-restam">0</span>
+    <span class="cont-label">Restam</span>
+  </div>
+</div>
 
-  <!-- CARD -->
-  <div class="card-area">
+<div class="categorias">
+  <button class="cat-btn ativo" onclick="selecionarCat(this, 'todas')">Todas</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Conceitos')">Conceitos</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Contenção e Estresse')">Contenção e Estresse</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Anfíbios')">Anfíbios</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Répteis')">Répteis</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Aves')">Aves</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Mamíferos')">Mamíferos</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Hematologia')">Hematologia</button>
+</div>
 
-    <div class="card-wrap" id="card" onclick="virarCard()">
-      <div class="card-inner">
-        <div class="card-face card-frente">
-          <p class="card-categoria" id="card-categoria" style="display:none"></p>
-          <p class="card-pergunta" id="card-pergunta">Pergunta de exemplo — o conteúdo real será inserido posteriormente.</p>
-          <p class="card-dica">Toque para revelar a resposta</p>
-        </div>
-        <div class="card-face card-verso">
-          <p class="card-label">Resposta</p>
-          <p class="card-resposta" id="card-resposta">Resposta de exemplo — o conteúdo real será inserido posteriormente.</p>
-        </div>
+<div class="progresso-bar">
+  <span class="prog-texto" id="prog-texto">1 / 0</span>
+  <div class="prog-linha">
+    <div class="prog-fill" id="prog-fill" style="width: 0%"></div>
+  </div>
+  <span class="prog-pct" id="prog-pct">0%</span>
+</div>
+
+<div class="card-area">
+
+  <div class="card-wrap" id="card" onclick="virarCard()">
+    <div class="card-inner">
+      <div class="card-face card-frente">
+        <p class="card-categoria" id="card-categoria"></p>
+        <p class="card-pergunta" id="card-pergunta"></p>
+        <p class="card-dica">Toque para revelar a resposta</p>
+      </div>
+      <div class="card-face card-verso">
+        <p class="card-label">Resposta</p>
+        <p class="card-resposta" id="card-resposta"></p>
       </div>
     </div>
-
-    <!-- SABIA / NÃO SABIA -->
-    <div class="sabia-btns" id="sabia-btns">
-      <button class="btn-sabia btn-nao" onclick="responder(false)">✕ Não sabia</button>
-      <button class="btn-sabia btn-sim" onclick="responder(true)">✓ Sabia</button>
-    </div>
-
-    <!-- NAVEGAÇÃO -->
-    <div class="nav-btns">
-      <button class="btn-nav" onclick="anterior()">← Anterior</button>
-      <button class="btn-nav btn-virar" onclick="virarCard()">Virar</button>
-      <button class="btn-nav" onclick="proximo()">Próxima →</button>
-    </div>
-
-    <!-- AÇÕES -->
-    <div class="acoes">
-      <button class="btn-acao" onclick="embaralhar()">Embaralhar</button>
-      <button class="btn-acao" onclick="reiniciar()">Reiniciar</button>
-      <button class="btn-acao btn-erros" onclick="revisarErros()">Revisar erros</button>
-    </div>
-
-    <p class="atalhos">Espaço = virar · → ← = navegar · S = sabia · N = não sabia</p>
-
   </div>
 
-  <script>
-    const CARDS = [
-      { cat: '', pergunta: 'Pergunta 01 — será substituída pelo conteúdo real.', resposta: 'Resposta 01 — será substituída pelo conteúdo real.' },
-      { cat: '', pergunta: 'Pergunta 02 — será substituída pelo conteúdo real.', resposta: 'Resposta 02 — será substituída pelo conteúdo real.' },
-      { cat: '', pergunta: 'Pergunta 03 — será substituída pelo conteúdo real.', resposta: 'Resposta 03 — será substituída pelo conteúdo real.' },
-      { cat: '', pergunta: 'Pergunta 04 — será substituída pelo conteúdo real.', resposta: 'Resposta 04 — será substituída pelo conteúdo real.' },
-      { cat: '', pergunta: 'Pergunta 05 — será substituída pelo conteúdo real.', resposta: 'Resposta 05 — será substituída pelo conteúdo real.' },
-      { cat: '', pergunta: 'Pergunta 06 — será substituída pelo conteúdo real.', resposta: 'Resposta 06 — será substituída pelo conteúdo real.' },
-    ];
+  <div class="sabia-btns" id="sabia-btns">
+    <button class="btn-sabia btn-nao" onclick="responder(false)">✕ Não sabia</button>
+    <button class="btn-sabia btn-sim" onclick="responder(true)">✓ Sabia</button>
+  </div>
 
-    let deck = [...CARDS];
-    let erros = [];
-    let acertos = 0;
-    let atual = 0;
-    let virado = false;
-    let respondidos = new Set();
+  <div class="nav-btns">
+    <button class="btn-nav" onclick="anterior()">← Anterior</button>
+    <button class="btn-nav btn-virar" onclick="virarCard()">Virar</button>
+    <button class="btn-nav" onclick="proximo()">Próxima →</button>
+  </div>
 
-    function renderizar() {
-      const c = deck[atual];
-      document.getElementById('card-categoria').textContent = c.cat;
-      document.getElementById('card-pergunta').textContent = c.pergunta;
-      document.getElementById('card-resposta').textContent = c.resposta;
-      document.getElementById('card').classList.remove('virado');
-      document.getElementById('sabia-btns').classList.remove('visivel');
-      virado = false;
-      atualizarProgresso();
-    }
+  <div class="acoes">
+    <button class="btn-acao" onclick="embaralhar()">Embaralhar</button>
+    <button class="btn-acao" onclick="reiniciar()">Reiniciar</button>
+    <button class="btn-acao btn-erros" onclick="revisarErros()">Revisar erros</button>
+  </div>
 
-    function atualizarProgresso() {
-      const total = deck.length;
-      const n = atual + 1;
-      const pct = Math.round((respondidos.size / total) * 100);
-      document.getElementById('prog-texto').textContent = n + ' / ' + total;
-      document.getElementById('prog-pct').textContent = pct + '%';
-      document.getElementById('prog-fill').style.width = pct + '%';
-      document.getElementById('cnt-total').textContent = CARDS.length;
-      document.getElementById('cnt-sabia').textContent = acertos;
-      document.getElementById('cnt-erro').textContent = erros.length;
-      document.getElementById('cnt-restam').textContent = total - respondidos.size;
-    }
+  <p class="atalhos">Espaço = virar · → ← = navegar · S = sabia · N = não sabia</p>
 
-    function virarCard() {
-      virado = !virado;
-      document.getElementById('card').classList.toggle('virado', virado);
-      document.getElementById('sabia-btns').classList.toggle('visivel', virado);
-    }
+</div>
 
-    function proximo() {
-      if (atual < deck.length - 1) { atual++; renderizar(); }
-    }
+<script>
+const CARDS = [
+  // CONCEITOS
+  { cat: 'Conceitos', q: 'O que é um animal doméstico?', a: 'Animal cujas características biológicas, comportamentais e fenotípicas foram modificadas por processos de manejo e seleção ao longo de gerações, tornando-o adaptado à convivência com o ser humano.' },
+  { cat: 'Conceitos', q: 'O que é um animal selvagem?', a: 'Animal cujas características genotípicas e fenotípicas permanecem semelhantes às encontradas em populações naturais, sem alterações significativas decorrentes da domesticação.' },
+  { cat: 'Conceitos', q: 'O que é um animal silvestre?', a: 'Animal pertencente à fauna nativa brasileira.' },
+  { cat: 'Conceitos', q: 'O que é um animal exótico?', a: 'Espécie cuja distribuição geográfica natural não inclui o território brasileiro.' },
+  { cat: 'Conceitos', q: 'O que é uma espécie exótica invasora?', a: 'Espécie introduzida fora de sua área de distribuição natural que causa impactos negativos às espécies nativas ou aos ecossistemas.' },
+  { cat: 'Conceitos', q: 'O que é uma espécie sinantrópica?', a: 'Espécie silvestre que se beneficia de ambientes modificados pelo homem e vive próxima às populações humanas sem ter sido domesticada.' },
+  { cat: 'Conceitos', q: 'Cite exemplos de espécies sinantrópicas.', a: 'Pombo-doméstico, rato-de-telhado e barata.' },
+  { cat: 'Conceitos', q: 'O que são ações de conservação in situ?', a: 'Estratégias de conservação realizadas no ambiente natural da espécie.' },
+  { cat: 'Conceitos', q: 'O que são ações de conservação ex situ?', a: 'Estratégias realizadas fora do ambiente natural da espécie, como zoológicos e criadouros.' },
+  { cat: 'Conceitos', q: 'O que é biodiversidade?', a: 'Variabilidade de organismos vivos, incluindo diversidade genética, de espécies e de ecossistemas.' },
+  { cat: 'Conceitos', q: 'O que são serviços ambientais?', a: 'Processos ecológicos que sustentam a vida humana e o funcionamento dos ecossistemas.' },
+  { cat: 'Conceitos', q: 'Qual é a principal causa de extinção de espécies atualmente?', a: 'Destruição e fragmentação de habitats.' },
+  { cat: 'Conceitos', q: 'Qual é a segunda principal causa de extinção de espécies?', a: 'Introdução de espécies exóticas invasoras.' },
+  { cat: 'Conceitos', q: 'Qual é a função do CETAS?', a: 'Receber, identificar, avaliar, reabilitar e destinar animais silvestres.' },
+  { cat: 'Conceitos', q: 'Cite três consequências do tráfico de animais silvestres.', a: 'Perda da biodiversidade, disseminação de doenças e introdução de espécies exóticas.' },
 
-    function anterior() {
-      if (atual > 0) { atual--; renderizar(); }
-    }
+  // CONTENÇÃO E ESTRESSE
+  { cat: 'Contenção e Estresse', q: 'Qual é o principal objetivo da contenção física?', a: 'Garantir a segurança do animal e da equipe durante procedimentos de manejo ou atendimento clínico.' },
+  { cat: 'Contenção e Estresse', q: 'O que é contenção química?', a: 'Utilização de fármacos para restringir parcial ou totalmente a movimentação do animal.' },
+  { cat: 'Contenção e Estresse', q: 'O que é miopatia de captura?', a: 'Síndrome associada ao estresse intenso decorrente da captura, contenção ou transporte, caracterizada por lesão muscular, acidose metabólica, rabdomiólise e possível insuficiência renal.' },
+  { cat: 'Contenção e Estresse', q: 'Como prevenir a miopatia de captura?', a: 'Reduzindo o tempo de contenção, minimizando o estresse e utilizando contenção química quando indicada.' },
+  { cat: 'Contenção e Estresse', q: 'Por que aves não devem ser contidas comprimindo a região peitoral?', a: 'Porque a ventilação depende dos movimentos do esterno e dos músculos respiratórios.' },
+  { cat: 'Contenção e Estresse', q: 'Por que a contenção pela cabeça não é recomendada em répteis?', a: 'Porque possuem apenas um côndilo occipital, aumentando o risco de lesões cervicais.' },
+  { cat: 'Contenção e Estresse', q: 'Qual equipamento é frequentemente utilizado para contenção de serpentes?', a: 'Gancho de contenção.' },
+  { cat: 'Contenção e Estresse', q: 'Qual equipamento auxilia a contenção segura de serpentes peçonhentas?', a: 'Tubo de acrílico.' },
+  { cat: 'Contenção e Estresse', q: 'Qual cuidado deve ser tomado durante a contenção de anfíbios?', a: 'Evitar contato com substâncias químicas e utilizar luvas sem talco.' },
+  { cat: 'Contenção e Estresse', q: 'O que é tanatose?', a: 'Comportamento defensivo no qual o animal simula estar morto.' },
+  { cat: 'Contenção e Estresse', q: 'Cite três EPIs importantes no manejo de animais selvagens.', a: 'Luvas, máscara e óculos de proteção.' },
 
-    function responder(sabia) {
-      if (!respondidos.has(atual)) {
-        respondidos.add(atual);
-        if (sabia) acertos++;
-        else erros.push(deck[atual]);
-      }
-      if (atual < deck.length - 1) { atual++; renderizar(); }
-      else atualizarProgresso();
-    }
+  // ANFÍBIOS
+  { cat: 'Anfíbios', q: 'Qual característica da pele dos anfíbios é fundamental para sua fisiologia?', a: 'Alta permeabilidade.' },
+  { cat: 'Anfíbios', q: 'Como a maioria dos anfíbios absorve água?', a: 'Por osmose através da pele.' },
+  { cat: 'Anfíbios', q: 'Quais são os tipos de respiração observados em anfíbios?', a: 'Cutânea, pulmonar, branquial e bucofaríngea.' },
+  { cat: 'Anfíbios', q: 'Quantas câmaras possui o coração dos anfíbios adultos?', a: 'Dois átrios e um ventrículo.' },
+  { cat: 'Anfíbios', q: 'Como são as hemácias dos anfíbios?', a: 'Nucleadas.' },
+  { cat: 'Anfíbios', q: 'Os anfíbios possuem linfonodos?', a: 'Não.' },
+  { cat: 'Anfíbios', q: 'Qual doença é considerada uma das principais causas do declínio mundial dos anfíbios?', a: 'Quitridiomicose.' },
+  { cat: 'Anfíbios', q: 'Qual composto nitrogenado é produzido pela maioria dos anfíbios adultos?', a: 'Ureia.' },
+  { cat: 'Anfíbios', q: 'O que é o órgão de Bidder?', a: 'Estrutura semelhante a um ovário presente em alguns anuros machos.' },
+  { cat: 'Anfíbios', q: 'Qual deficiência nutricional pode causar redução da produção de muco em anfíbios?', a: 'Deficiência de vitamina A.' },
+  { cat: 'Anfíbios', q: 'O que é febre comportamental?', a: 'Busca ativa por temperaturas mais elevadas para auxiliar no combate a enfermidades.' },
+  { cat: 'Anfíbios', q: 'Qual a principal função dos corações linfáticos?', a: 'Auxiliar o retorno da linfa para a circulação sistêmica.' },
 
-    function embaralhar() {
-      deck = [...CARDS].sort(() => Math.random() - 0.5);
-      atual = 0; erros = []; acertos = 0; respondidos = new Set();
-      renderizar();
-    }
+  // RÉPTEIS
+  { cat: 'Répteis', q: 'Qual foi o primeiro grupo vertebrado independente da água para reprodução?', a: 'Répteis.' },
+  { cat: 'Répteis', q: 'Qual composto nitrogenado é excretado pelos répteis?', a: 'Ácido úrico.' },
+  { cat: 'Répteis', q: 'O que é o sistema porta-renal?', a: 'Sistema vascular em que parte do sangue dos membros posteriores passa pelos rins antes de retornar à circulação sistêmica.' },
+  { cat: 'Répteis', q: 'Por que deve-se evitar aplicar medicamentos nefrotóxicos nos membros posteriores dos répteis?', a: 'Devido ao sistema porta-renal.' },
+  { cat: 'Répteis', q: 'O que é ecdise?', a: 'Processo de troca periódica da pele.' },
+  { cat: 'Répteis', q: 'O que é disecdise?', a: 'Troca incompleta ou anormal da pele.' },
+  { cat: 'Répteis', q: 'Qual estrutura sensorial recebe informações químicas captadas pela língua?', a: 'Órgão vomeronasal (Jacobson).' },
+  { cat: 'Répteis', q: 'O que é a fosseta loreal?', a: 'Estrutura termorreceptora presente em algumas serpentes.' },
+  { cat: 'Répteis', q: 'Qual a principal função da radiação UVB em répteis?', a: 'Permitir a síntese de vitamina D3.' },
+  { cat: 'Répteis', q: 'Qual a importância da vitamina D3?', a: 'Favorecer a absorção intestinal de cálcio.' },
+  { cat: 'Répteis', q: 'Qual sinal clínico clássico da hipovitaminose A em quelônios?', a: 'Edema palpebral.' },
+  { cat: 'Répteis', q: 'O que é estomatite infecciosa?', a: 'Processo infeccioso e inflamatório da cavidade oral dos répteis.' },
+  { cat: 'Répteis', q: 'Qual sinal clínico frequentemente observado na estomatite infecciosa?', a: 'Exsudato caseoso oral.' },
+  { cat: 'Répteis', q: 'O que é fibropapilomatose?', a: 'Doença caracterizada pela formação de tumores em tartarugas marinhas.' },
+  { cat: 'Répteis', q: 'Qual a principal consequência da fibropapilomatose severa?', a: 'Comprometimento da alimentação, visão e locomoção.' },
+  { cat: 'Répteis', q: 'Como são as hemácias dos répteis?', a: 'Nucleadas.' },
+  { cat: 'Répteis', q: 'Qual órgão permite a detecção de calor em serpentes peçonhentas como jararacas e cascavéis?', a: 'Fosseta loreal.' },
 
-    function reiniciar() {
-      deck = [...CARDS];
-      atual = 0; erros = []; acertos = 0; respondidos = new Set();
-      renderizar();
-    }
+  // AVES
+  { cat: 'Aves', q: 'Qual é a única glândula verdadeira das aves?', a: 'Glândula uropigiana.' },
+  { cat: 'Aves', q: 'Cite três funções das penas.', a: 'Voo, termorregulação e impermeabilização.' },
+  { cat: 'Aves', q: 'O que são plúmulas?', a: 'Penas responsáveis pelo isolamento térmico.' },
+  { cat: 'Aves', q: 'Como são chamadas as penas da cauda?', a: 'Retrizes.' },
+  { cat: 'Aves', q: 'Como são chamadas as penas das asas?', a: 'Rêmiges.' },
+  { cat: 'Aves', q: 'O que é a siringe?', a: 'Órgão responsável pela vocalização.' },
+  { cat: 'Aves', q: 'Onde a siringe está localizada?', a: 'Na bifurcação da traqueia.' },
+  { cat: 'Aves', q: 'Qual a função do inglúvio?', a: 'Armazenamento temporário de alimento.' },
+  { cat: 'Aves', q: 'Qual parte do estômago realiza digestão química?', a: 'Proventrículo.' },
+  { cat: 'Aves', q: 'Qual parte do estômago realiza digestão mecânica?', a: 'Ventrículo (moela).' },
+  { cat: 'Aves', q: 'Qual a função dos sacos aéreos?', a: 'Auxiliar a ventilação pulmonar, reduzir o peso corporal e auxiliar na termorregulação.' },
+  { cat: 'Aves', q: 'Os sacos aéreos realizam trocas gasosas?', a: 'Não.' },
+  { cat: 'Aves', q: 'Quantos ciclos respiratórios são necessários para o ar percorrer completamente o sistema respiratório das aves?', a: 'Dois ciclos respiratórios.' },
+  { cat: 'Aves', q: 'O que significa PBFD?', a: 'Doença do bico e das penas dos psitacídeos.' },
+  { cat: 'Aves', q: 'Qual agente causa a PBFD?', a: 'Circovírus aviário.' },
+  { cat: 'Aves', q: 'Qual sinal clínico clássico da PBFD?', a: 'Alterações de penas e deformidades de bico.' },
+  { cat: 'Aves', q: 'Qual fungo está mais associado à aspergilose aviária?', a: 'Aspergillus fumigatus.' },
+  { cat: 'Aves', q: 'Qual sistema é mais afetado pela aspergilose?', a: 'Sistema respiratório.' },
+  { cat: 'Aves', q: 'Por que aves não devem permanecer longos períodos em jejum?', a: 'Devido à alta taxa metabólica e ao risco de hipoglicemia.' },
+  { cat: 'Aves', q: 'Quais são os três compartimentos da cloaca?', a: 'Coprodeo, urodeo e proctodeo.' },
 
-    function revisarErros() {
-      if (erros.length === 0) { alert('Nenhum erro registrado ainda.'); return; }
-      deck = [...erros];
-      erros = []; acertos = 0; atual = 0; respondidos = new Set();
-      renderizar();
-    }
+  // MAMÍFEROS
+  { cat: 'Mamíferos', q: 'Qual característica define os mamíferos?', a: 'Presença de glândulas mamárias.' },
+  { cat: 'Mamíferos', q: 'Como são as hemácias dos mamíferos?', a: 'Anucleadas.' },
+  { cat: 'Mamíferos', q: 'Qual estrutura separa as cavidades torácica e abdominal?', a: 'Diafragma.' },
+  { cat: 'Mamíferos', q: 'Qual grupo de mamíferos deposita ovos?', a: 'Monotremados.' },
+  { cat: 'Mamíferos', q: 'O que caracteriza os marsupiais?', a: 'Desenvolvimento dos filhotes no marsúpio após curto período gestacional.' },
+  { cat: 'Mamíferos', q: 'O que caracteriza os mamíferos placentários?', a: 'Desenvolvimento fetal associado à placenta.' },
+  { cat: 'Mamíferos', q: 'Qual adaptação alimentar é típica dos tamanduás?', a: 'Língua longa e ausência de dentes.' },
+  { cat: 'Mamíferos', q: 'Qual grupo apresenta visão estereoscópica altamente desenvolvida?', a: 'Primatas.' },
+  { cat: 'Mamíferos', q: 'Qual grupo utiliza ecolocalização?', a: 'Morcegos.' },
+  { cat: 'Mamíferos', q: 'Qual é o maior roedor do mundo?', a: 'Capivara.' },
+  { cat: 'Mamíferos', q: 'Qual característica dentária é típica dos roedores?', a: 'Incisivos de crescimento contínuo.' },
+  { cat: 'Mamíferos', q: 'O que é cecotrofia?', a: 'Comportamento fisiológico em que o animal reingere cecotrofos para reaproveitamento de nutrientes produzidos pela microbiota intestinal.' },
+  { cat: 'Mamíferos', q: 'O que é estase gastrointestinal?', a: 'Redução ou interrupção da motilidade gastrointestinal.' },
+  { cat: 'Mamíferos', q: 'Qual problema dentário é frequentemente observado em lagomorfos?', a: 'Má oclusão dentária.' },
+  { cat: 'Mamíferos', q: 'Qual a principal função ecológica das antas?', a: 'Dispersão de sementes.' },
 
-    document.addEventListener('keydown', e => {
-      if (e.key === ' ') { e.preventDefault(); virarCard(); }
-      if (e.key === 'ArrowRight') proximo();
-      if (e.key === 'ArrowLeft') anterior();
-      if ((e.key === 's' || e.key === 'S') && virado) responder(true);
-      if ((e.key === 'n' || e.key === 'N') && virado) responder(false);
-    });
+  // HEMATOLOGIA
+  { cat: 'Hematologia', q: 'Como são as hemácias de aves e répteis?', a: 'Nucleadas.' },
+  { cat: 'Hematologia', q: 'Como são os trombócitos de aves e répteis?', a: 'Nucleados.' },
+  { cat: 'Hematologia', q: 'Qual anticoagulante é frequentemente recomendado para quelônios?', a: 'Heparina.' },
+  { cat: 'Hematologia', q: 'Qual anticoagulante é frequentemente utilizado em mamíferos?', a: 'EDTA.' },
+  { cat: 'Hematologia', q: 'Qual o volume máximo de sangue que pode ser coletado de forma segura?', a: 'Aproximadamente 1% do peso corporal.' },
+  { cat: 'Hematologia', q: 'Qual célula sanguínea é responsável pelo transporte de oxigênio?', a: 'Hemácia.' },
+  { cat: 'Hematologia', q: 'Qual célula participa principalmente da coagulação sanguínea em aves e répteis?', a: 'Trombócito.' },
+  { cat: 'Hematologia', q: 'Como são as hemácias dos mamíferos em comparação às de aves e répteis?', a: 'São anucleadas.' },
+  { cat: 'Hematologia', q: 'Qual característica hematológica diferencia os mamíferos dos demais grupos estudados na disciplina?', a: 'Presença de hemácias anucleadas.' },
+];
 
-    renderizar();
-  </script>
+let deck = [...CARDS];
+let erros = [];
+let acertos = 0;
+let atual = 0;
+let virado = false;
+let respondidos = new Set();
+
+function renderizar() {
+  const c = deck[atual];
+  document.getElementById('card-categoria').textContent = c.cat;
+  document.getElementById('card-pergunta').textContent = c.q;
+  document.getElementById('card-resposta').textContent = c.a;
+  document.getElementById('card').classList.remove('virado');
+  document.getElementById('sabia-btns').classList.remove('visivel');
+  virado = false;
+  atualizarProgresso();
+}
+
+function atualizarProgresso() {
+  const total = deck.length;
+  const n = atual + 1;
+  const pct = Math.round((respondidos.size / total) * 100);
+  document.getElementById('prog-texto').textContent = n + ' / ' + total;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('cnt-total').textContent = deck.length;
+  document.getElementById('cnt-sabia').textContent = acertos;
+  document.getElementById('cnt-erro').textContent = erros.length;
+  document.getElementById('cnt-restam').textContent = total - respondidos.size;
+}
+
+function virarCard() {
+  virado = !virado;
+  document.getElementById('card').classList.toggle('virado', virado);
+  document.getElementById('sabia-btns').classList.toggle('visivel', virado);
+}
+
+function proximo() {
+  if (atual < deck.length - 1) { atual++; renderizar(); }
+}
+
+function anterior() {
+  if (atual > 0) { atual--; renderizar(); }
+}
+
+function responder(sabia) {
+  if (!respondidos.has(atual)) {
+    respondidos.add(atual);
+    if (sabia) acertos++;
+    else erros.push(deck[atual]);
+  }
+  if (atual < deck.length - 1) { atual++; renderizar(); }
+  else atualizarProgresso();
+}
+
+function embaralhar() {
+  deck = [...deck].sort(() => Math.random() - 0.5);
+  atual = 0; erros = []; acertos = 0; respondidos = new Set();
+  renderizar();
+}
+
+function reiniciar() {
+  atual = 0; erros = []; acertos = 0; respondidos = new Set();
+  renderizar();
+}
+
+function revisarErros() {
+  if (erros.length === 0) { alert('Nenhum erro registrado ainda.'); return; }
+  deck = [...erros];
+  erros = []; acertos = 0; atual = 0; respondidos = new Set();
+  renderizar();
+}
+
+function selecionarCat(btn, cat) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('ativo'));
+  btn.classList.add('ativo');
+  deck = cat === 'todas' ? [...CARDS] : CARDS.filter(c => c.cat === cat);
+  atual = 0; erros = []; acertos = 0; respondidos = new Set();
+  renderizar();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === ' ') { e.preventDefault(); virarCard(); }
+  if (e.key === 'ArrowRight') proximo();
+  if (e.key === 'ArrowLeft') anterior();
+  if ((e.key === 's' || e.key === 'S') && virado) responder(true);
+  if ((e.key === 'n' || e.key === 'N') && virado) responder(false);
+});
+
+renderizar();
+</script>
 
 </body>
 </html>
