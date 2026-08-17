@@ -265,13 +265,64 @@
     }
 
     /* ARTIGOS */
-    .artigos-placeholder {
-      font-size: 0.82rem;
-      color: var(--stone);
-      font-style: italic;
-      padding: 2rem;
-      border: 1px dashed var(--mist);
-      text-align: center;
+    .artigo {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 2rem;
+      padding: 1.6rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .artigo:first-child { border-top: 1px solid var(--rule-heavy); }
+
+    .artigo-texto { flex: 1; }
+
+    .artigo-titulo {
+      font-family: 'Lora', serif;
+      font-weight: 600;
+      font-size: 0.98rem;
+      color: var(--ink);
+      line-height: 1.45;
+      margin-bottom: 0.4rem;
+    }
+    .artigo-titulo em { font-style: italic; }
+
+    .artigo-autores {
+      font-size: 0.78rem;
+      color: var(--ink-light);
+      line-height: 1.6;
+      margin-bottom: 0.2rem;
+    }
+    .artigo-autores strong { color: var(--green-mid); font-weight: 500; }
+
+    .artigo-fonte { font-size: 0.72rem; color: var(--stone); }
+    .artigo-ano { font-weight: 500; }
+
+    .artigo-pdf {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.64rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      text-decoration: none;
+      border: 1px solid var(--mist);
+      padding: 0.5rem 0.9rem;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .artigo-pdf:hover {
+      background: var(--green-mid);
+      color: var(--white);
+      border-color: var(--green-mid);
+    }
+    .artigo-pdf svg { width: 11px; height: 11px; }
+
+    @media (max-width: 640px) {
+      .artigo { flex-direction: column; align-items: flex-start; gap: 0.9rem; }
     }
 
     .reveal {
@@ -305,7 +356,7 @@
     <ul>
       <li><a href="guia.html">Guia do Site</a></li>
       <li><a href="atividades.html">Atividades Interativas</a></li>
-      <li><a href="dardos.html">Dardos Anestésicos</a></li>
+      <li><a href="contencao.html">Contenção Física</a></li>
       <li><a href="producao.html" class="active">Produção Científica</a></li>
     </ul>
   </div>
@@ -351,9 +402,91 @@
   <!-- ARTIGOS -->
   <div class="reveal">
     <p class="secao-label">Produção científica</p>
-    <div class="artigos-placeholder">
-      Artigos e publicações em breve.
+
+    <div class="artigo">
+      <div class="artigo-texto">
+        <h2 class="artigo-titulo">Aspectos clínicos e anatomopatológicos de aspergilose e candidíase em calopsita (<em>Nymphicus hollandicus</em>): relato de caso</h2>
+        <p class="artigo-autores">Vasconcelos TCB, Longa CS, Albuquerque DDA, Costa CHC, <strong>Bruno SF</strong></p>
+        <p class="artigo-fonte">Revista Portuguesa de Ciências Veterinárias, 106, p. 109-112 · <span class="artigo-ano">2011</span></p>
+      </div>
+      <a class="artigo-pdf" href="artigos/vasconcelos-2011.pdf" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>
+        PDF
+      </a>
     </div>
+
+    <div class="artigo">
+      <div class="artigo-texto">
+        <h2 class="artigo-titulo">Fibrossarcoma mamário em fêmea de rato Wistar (<em>Rattus norvegicus</em> Berkenhout, 1769) - Relato de caso</h2>
+        <p class="artigo-autores"><strong>Bruno SF</strong>, Longa CS, Campos SDE, Monteiro FO, Dória PBA, Costa CHC</p>
+        <p class="artigo-fonte">Revista Brasileira de Medicina Veterinária, 33(3), p. 171-176 · <span class="artigo-ano">2011</span></p>
+      </div>
+      <a class="artigo-pdf" href="artigos/bruno-2011.pdf" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>
+        PDF
+      </a>
+    </div>
+
+    <div class="artigo">
+      <div class="artigo-texto">
+        <h2 class="artigo-titulo">Linfoma em hamster chinês (<em>Cricetulus griseus</em>): relato de dois casos</h2>
+        <p class="artigo-autores">Alencar NX, <strong>Bruno SF</strong>, Campos SDE, Queiroz GB, Souza AM, Macieira DB</p>
+        <p class="artigo-fonte">Revista Brasileira de Medicina Veterinária, 34(2), p. 141-145 · <span class="artigo-ano">2012</span></p>
+      </div>
+      <a class="artigo-pdf" href="artigos/alencar-2012.pdf" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>
+        PDF
+      </a>
+    </div>
+
+    <div class="artigo">
+      <div class="artigo-texto">
+        <h2 class="artigo-titulo">Coccidiose em <em>Sporophila maximiliani</em> (Passeriformes: Emberizidae): relato de dois casos</h2>
+        <p class="artigo-autores">Vasconcelos TCB, Longa CS, Campos SDE, Costa CHC, <strong>Bruno SF</strong></p>
+        <p class="artigo-fonte">Revista Brasileira de Medicina Veterinária, 34(4), p. 261-264 · <span class="artigo-ano">2012</span></p>
+      </div>
+      <a class="artigo-pdf" href="artigos/vasconcelos-2012.pdf" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>
+        PDF
+      </a>
+    </div>
+
+    <div class="artigo">
+      <div class="artigo-texto">
+        <h2 class="artigo-titulo"><em>Chlamydophila psittaci</em> em aves silvestres e exóticas: uma revisão com ênfase em saúde pública</h2>
+        <p class="artigo-autores">Vasconcelos TCB, Nogueira DM, Pereira VLA, Nascimento ER, <strong>Bruno SF</strong></p>
+        <p class="artigo-fonte">Enciclopédia Biosfera, v.9, n.16, p. 2462-2477 · <span class="artigo-ano">2013</span></p>
+      </div>
+      <a class="artigo-pdf" href="artigos/vasconcelos-2013.pdf" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>
+        PDF
+      </a>
+    </div>
+
+    <div class="artigo">
+      <div class="artigo-texto">
+        <h2 class="artigo-titulo">Uso da terapia fotodinâmica empregando azul de metileno a 2% como agente fotossensibilizante para o controle de crescimento tumoral em calopsita (<em>Nynphicus hollandicus</em>) portador de sarcoma</h2>
+        <p class="artigo-autores">Israel CB, Santos DF, Maués T, Queiroz GB, Costa FB, Nascimento JS, <strong>Bruno SF</strong>, Ferreira MLG</p>
+        <p class="artigo-fonte">Revista Brasileira de Ciência Veterinária, v.21, n.2, p. 86-89 · <span class="artigo-ano">2014</span></p>
+      </div>
+      <a class="artigo-pdf" href="artigos/israel-2014.pdf" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>
+        PDF
+      </a>
+    </div>
+
+    <div class="artigo">
+      <div class="artigo-texto">
+        <h2 class="artigo-titulo">Padronização do analisador hematológico automatizado veterinário Sysmex pocH-100iV Diff para micos-de-cheiro, <em>Saimiri sciureus</em> (Primates: Cebidae)</h2>
+        <p class="artigo-autores">Longa CS, Campos SDE, Souza AM, <strong>Bruno SF</strong>, Almosny NRP</p>
+        <p class="artigo-fonte">Enciclopédia Biosfera, v.10, n.19, p. 1411-1417 · <span class="artigo-ano">2014</span></p>
+      </div>
+      <a class="artigo-pdf" href="artigos/longa-2014.pdf" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 19h16"/></svg>
+        PDF
+      </a>
+    </div>
+
   </div>
 
 </div>
