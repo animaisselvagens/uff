@@ -3,273 +3,60 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Palavras Cruzadas — Animais Selvagens UFF</title>
+  <title>Palavras Cruzadas: Animais Selvagens UFF</title>
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: #f4f2ed;
-      font-family: "DM Sans", sans-serif;
-      font-weight: 300;
-      color: #12130f;
-      padding: 2rem;
-      min-height: 100vh;
-    }
-
-    :root {
-      --ink:        #12130f;
-      --ink-light:  #5a5d52;
-      --stone:      #8a8c83;
-      --mist:       #c8cac0;
-      --paper:      #f4f2ed;
-      --paper-warm: #ede9e0;
-      --white:      #fafaf7;
-      --green-deep: #1c3020;
-      --green-mid:  #2e4d34;
-      --green-sage: #5a7d5f;
-      --green-pale: #a8c5ab;
-      --rule:       rgba(18,19,15,0.1);
-      --rule-heavy: rgba(18,19,15,0.2);
-    }
-
-    .titulo {
-      font-family: "Lora", serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-    }
-
-    .subtitulo {
-      font-size: 0.78rem;
-      color: var(--stone);
-      margin-bottom: 2rem;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 3rem;
-      align-items: start;
-      max-width: 900px;
-    }
-
-    /* GRID */
-    .grid-wrap { overflow-x: auto; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(12, 36px);
-      grid-template-rows: repeat(11, 36px);
-      gap: 2px;
-    }
-
-    .cell {
-      width: 36px;
-      height: 36px;
-    }
-
-    .cell-vazia { background: transparent; }
-
-    .cell-letra {
-      background: var(--white);
-      border: 1px solid var(--rule-heavy);
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .cell-letra.correta { background: #e8f2e8; border-color: var(--green-sage); }
-    .cell-letra.errada  { background: #f2e8e8; border-color: #c08080; }
-
-    .cell-num {
-      position: absolute;
-      top: 2px;
-      left: 3px;
-      font-size: 8px;
-      font-weight: 600;
-      color: var(--green-mid);
-      line-height: 1;
-    }
-
-    .cell-input {
-      width: 100%;
-      height: 100%;
-      border: none;
-      background: transparent;
-      text-align: center;
-      font-family: "DM Sans", sans-serif;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--ink);
-      text-transform: uppercase;
-      outline: none;
-      cursor: pointer;
-      padding-top: 6px;
-    }
-
-    .cell-input:focus { background: rgba(90,125,95,0.08); }
-
-    /* PISTAS */
-    .pistas { min-width: 260px; }
-
-    .pistas-secao { margin-bottom: 1.8rem; }
-
-    .pistas-titulo {
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--stone);
-      margin-bottom: 1rem;
-      padding-bottom: 0.4rem;
-      border-bottom: 1px solid var(--rule);
-    }
-
-    .pista-item {
-      display: flex;
-      gap: 0.6rem;
-      margin-bottom: 0.7rem;
-      cursor: pointer;
-      transition: color 0.15s;
-    }
-
-    .pista-item:hover { color: var(--green-mid); }
-    .pista-item.ativa { color: var(--green-mid); font-weight: 500; }
-
-    .pista-num {
-      font-family: "Lora", serif;
-      font-size: 0.75rem;
-      color: var(--green-mid);
-      min-width: 1.2rem;
-      padding-top: 0.05rem;
-    }
-
-    .pista-texto {
-      font-size: 0.78rem;
-      line-height: 1.55;
-      color: var(--ink-light);
-    }
-
-    .pista-item.ativa .pista-texto { color: var(--ink); }
-
-    /* BOTÕES */
-    .btns {
-      display: flex;
-      gap: 0.6rem;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 0.65rem 1.4rem;
-      font-family: "DM Sans", sans-serif;
-      font-size: 0.72rem;
-      font-weight: 500;
-      cursor: pointer;
-      border-radius: 50px;
-      border: 1px solid var(--rule-heavy);
-      background: var(--white);
-      color: var(--ink-light);
-      transition: all 0.2s;
-    }
-
-    .btn:hover { background: var(--paper-warm); color: var(--ink); }
-
-    .btn-verificar {
-      background: var(--green-deep);
-      color: var(--white);
-      border-color: var(--green-deep);
-    }
-
-    .btn-verificar:hover { background: var(--green-mid); border-color: var(--green-mid); }
-
-    /* RESULTADO */
-    .resultado-msg {
-      margin-top: 1rem;
-      font-size: 0.8rem;
-      color: var(--stone);
-      min-height: 1.2rem;
-    }
-
-    .resultado-msg.acerto { color: var(--green-mid); font-weight: 500; }
-    .resultado-msg.erro   { color: #8a3030; }
-
-    @media (max-width: 700px) {
-      .layout { grid-template-columns: 1fr; }
-      .grid { grid-template-columns: repeat(12, 30px); grid-template-rows: repeat(11, 30px); }
-      .cell { width: 30px; height: 30px; }
-    }
-  
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
-      background: rgba(22,40,26,0.98);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 58px;
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      text-decoration: none;
-    }
-    .nav-logo { height: 26px; width: auto; display: block; }
-    .nav-divider { width: 1px; height: 22px; background: rgba(255,255,255,0.12); }
-    .nav-title strong {
-      font-family: "Lora", serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #fafaf7;
-      line-height: 1.2;
-      display: block;
-    }
-    .nav-title span {
-      font-size: 0.6rem;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #5a7d5f;
-    }
-    nav ul { list-style: none; display: flex; align-items: center; }
-    nav ul li a {
-      display: flex;
-      align-items: center;
-      height: 58px;
-      padding: 0 1rem;
-      text-decoration: none;
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(200,210,200,0.65);
-      border-bottom: 2px solid transparent;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    nav ul li a:hover, nav ul li a.active {
-      color: #fafaf7;
-      border-bottom-color: #5a7d5f;
-    }
-    @media (max-width: 900px) {
-      nav ul { display: none; }
-      .nav-inner { padding: 0 1.5rem; }
-    }
-
-    body { padding-top: 58px; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--ink:#12130f;--ink-light:#5a5d52;--stone:#8a8c83;--paper:#f4f2ed;--paper-warm:#ede9e0;--white:#fafaf7;--green-deep:#1c3020;--green-mid:#2e4d34;--green-sage:#5a7d5f;--rule:rgba(18,19,15,0.1);--rule-heavy:rgba(18,19,15,0.2);}
+    body{background:var(--paper);font-family:"DM Sans",sans-serif;font-weight:300;color:var(--ink);min-height:100vh;}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(22,40,26,0.98);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.07);}
+    .nav-inner{max-width:1200px;margin:0 auto;padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:58px;}
+    .nav-brand{display:flex;align-items:center;gap:1rem;text-decoration:none;}
+    .nav-logo{height:26px;width:auto;display:block;}
+    .nav-divider{width:1px;height:22px;background:rgba(255,255,255,0.12);}
+    .nav-title strong{font-family:"Lora",serif;font-size:0.9rem;font-weight:600;color:#fafaf7;display:block;}
+    .nav-title span{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:#5a7d5f;}
+    nav ul{list-style:none;display:flex;align-items:center;}
+    nav ul li a{display:flex;align-items:center;height:58px;padding:0 1rem;text-decoration:none;font-size:0.68rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:rgba(200,210,200,0.65);border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;}
+    nav ul li a:hover,nav ul li a.active{color:#fafaf7;border-bottom-color:#5a7d5f;}
+    .page-header{background:var(--green-deep);padding:5rem 2.5rem 2.5rem;margin-top:58px;}
+    .page-header-inner{max-width:1200px;margin:0 auto;}
+    .page-eyebrow{font-size:0.62rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-sage);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.8rem;}
+    .page-eyebrow::before{content:"";display:inline-block;width:1.8rem;height:1px;background:var(--green-sage);}
+    .page-title{font-family:"Lora",serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:600;color:var(--white);}
+    .theme-bar{background:var(--paper-warm);border-bottom:1px solid var(--rule);padding:0.8rem 2rem;display:flex;flex-wrap:wrap;gap:0.4rem;}
+    .theme-btn{font-size:0.7rem;color:var(--ink-light);background:var(--white);border:1px solid var(--rule-heavy);padding:0.35rem 0.85rem;border-radius:50px;cursor:pointer;transition:all 0.2s;font-family:"DM Sans",sans-serif;}
+    .theme-btn:hover,.theme-btn.ativo{background:var(--green-deep);color:var(--white);border-color:var(--green-deep);}
+    .cw-area{max-width:1100px;margin:0 auto;padding:2.5rem 2rem;display:grid;grid-template-columns:auto 1fr;gap:3rem;align-items:start;}
+    .grid-wrap{overflow-x:auto;}
+    .grid{display:inline-grid;gap:2px;}
+    .cell{width:36px;height:36px;}
+    .cell-vazia{background:transparent;}
+    .cell-letra{background:var(--white);border:1px solid var(--rule-heavy);position:relative;display:flex;align-items:center;justify-content:center;}
+    .cell-letra.correta{background:#e8f2e8;border-color:var(--green-sage);}
+    .cell-letra.errada{background:#f2e8e8;border-color:#c08080;}
+    .cell-letra.destacada:not(.correta):not(.errada){background:rgba(90,125,95,0.1);}
+    .cell-num{position:absolute;top:2px;left:3px;font-size:8px;font-weight:600;color:var(--green-mid);line-height:1;pointer-events:none;}
+    .cell-input{width:100%;height:100%;border:none;background:transparent;text-align:center;font-family:"DM Sans",sans-serif;font-size:0.9rem;font-weight:500;color:var(--ink);text-transform:uppercase;outline:none;cursor:pointer;padding-top:8px;}
+    .pistas{min-width:220px;max-width:340px;}
+    .pistas-secao{margin-bottom:1.5rem;}
+    .pistas-titulo{font-size:0.6rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--stone);margin-bottom:0.8rem;padding-bottom:0.4rem;border-bottom:1px solid var(--rule);}
+    .pista-item{display:flex;gap:0.5rem;margin-bottom:0.6rem;cursor:pointer;padding:0.2rem;border-radius:4px;transition:background 0.15s;}
+    .pista-item:hover,.pista-item.ativa{background:rgba(90,125,95,0.08);}
+    .pista-num{font-family:"Lora",serif;font-size:0.72rem;color:var(--green-mid);min-width:1.2rem;flex-shrink:0;}
+    .pista-texto{font-size:0.76rem;line-height:1.5;color:var(--ink-light);}
+    .btns{display:flex;gap:0.5rem;margin-top:1.2rem;flex-wrap:wrap;}
+    .btn{padding:0.6rem 1.2rem;font-family:"DM Sans",sans-serif;font-size:0.7rem;font-weight:500;cursor:pointer;border-radius:50px;border:1px solid var(--rule-heavy);background:var(--white);color:var(--ink-light);transition:all 0.2s;}
+    .btn:hover{background:var(--paper-warm);color:var(--ink);}
+    .btn-verificar{background:var(--green-deep);color:var(--white);border-color:var(--green-deep);}
+    .btn-verificar:hover{background:var(--green-mid);}
+    .msg{margin-top:0.8rem;font-size:0.78rem;color:var(--stone);min-height:1rem;}
+    .msg.acerto{color:var(--green-mid);font-weight:500;}
+    .msg.erro{color:#8a3030;}
+    @media(max-width:900px){.cw-area{grid-template-columns:1fr;}.pistas{max-width:100%;}nav ul{display:none;}.nav-inner{padding:0 1.5rem;}}
   </style>
 </head>
 <body>
-
 <nav>
   <div class="nav-inner">
     <a class="nav-brand" href="index.html">
@@ -282,258 +69,187 @@
     </a>
     <ul>
       <li><a href="guia.html">Guia do Site</a></li>
-      <li><a href="atividades.html">Atividades Interativas</a></li>
-      <li><a href="dardos.html">Dardos Anestésicos</a></li>
+      <li><a href="atividades.html" class="active">Atividades Interativas</a></li>
+      <li><a href="contencao.html">Contenção Física</a></li>
       <li><a href="producao.html">Produção Científica</a></li>
     </ul>
   </div>
 </nav>
-
-  <p class="titulo">Palavras Cruzadas</p>
-  <p class="subtitulo">Preencha as palavras a partir das definições. Clique em uma pista para destacar a palavra no grid.</p>
-
-  <div class="layout">
-
-    <!-- GRID -->
-    <div class="grid-wrap">
-      <div class="grid" id="grid"></div>
-      <div class="btns">
-        <button class="btn btn-verificar" onclick="verificar()">Verificar</button>
-        <button class="btn" onclick="revelar()">Revelar</button>
-        <button class="btn" onclick="limpar()">Limpar</button>
-      </div>
-      <p class="resultado-msg" id="msg"></p>
-    </div>
-
-    <!-- PISTAS -->
-    <div class="pistas">
-      <div class="pistas-secao">
-        <p class="pistas-titulo">Horizontal</p>
-        <div id="pistas-h"></div>
-      </div>
-      <div class="pistas-secao">
-        <p class="pistas-titulo">Vertical</p>
-        <div id="pistas-v"></div>
-      </div>
-    </div>
-
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-eyebrow">Atividades Interativas</p>
+    <h1 class="page-title">Palavras Cruzadas</h1>
   </div>
+</div>
+<div class="theme-bar">
+  <button class="theme-btn ativo" onclick="trocarTema('conceitos')">Conceitos e Conservação</button>
+  <button class="theme-btn" onclick="trocarTema('anfibios')">Anfíbios</button>
+  <button class="theme-btn" onclick="trocarTema('repteis')">Répteis</button>
+  <button class="theme-btn" onclick="trocarTema('aves')">Aves</button>
+  <button class="theme-btn" onclick="trocarTema('mamiferos')">Mamíferos</button>
+  <button class="theme-btn" onclick="trocarTema('hematologia')">Hematologia</button>
+</div>
+<div class="cw-area">
+  <div>
+    <div class="grid-wrap"><div class="grid" id="grid"></div></div>
+    <div class="btns">
+      <button class="btn btn-verificar" onclick="verificar()">Verificar</button>
+      <button class="btn" onclick="revelar()">Revelar</button>
+      <button class="btn" onclick="limpar()">Limpar</button>
+    </div>
+    <p class="msg" id="msg"></p>
+  </div>
+  <div class="pistas">
+    <div class="pistas-secao"><p class="pistas-titulo">Horizontal</p><div id="pistas-h"></div></div>
+    <div class="pistas-secao"><p class="pistas-titulo">Vertical</p><div id="pistas-v"></div></div>
+  </div>
+</div>
+<script>
+const TEMAS={"conceitos": {"title": "Conceitos e Conservação", "placements": [{"word": "BIODIVERSIDADE", "dir": "H", "row": 5, "col": 0, "num": 6, "clue": "Variabilidade de organismos vivos, incluindo diversidade genética, de espécies e de ecossistemas."}, {"word": "SINANTROPICA", "dir": "V", "row": 4, "col": 1, "num": 4, "clue": "Espécie silvestre adaptada à convivência próxima com populações humanas."}, {"word": "INVASORA", "dir": "V", "row": 0, "col": 2, "num": 1, "clue": "Espécie introduzida que causa impactos negativos às espécies nativas e aos ecossistemas."}, {"word": "EXOTICO", "dir": "V", "row": 1, "col": 4, "num": 2, "clue": "Espécie cuja distribuição geográfica natural não inclui o território brasileiro."}, {"word": "TRAFICO", "dir": "V", "row": 4, "col": 7, "num": 5, "clue": "Principal atividade ilegal responsável pela retirada de milhões de animais da natureza."}, {"word": "INSITU", "dir": "V", "row": 3, "col": 8, "num": 3, "clue": "Estratégia de conservação realizada no ambiente natural da espécie."}, {"word": "EXSITU", "dir": "V", "row": 5, "col": 6, "num": 7, "clue": "Estratégia de conservação realizada fora do ambiente natural da espécie."}]}, "anfibios": {"title": "Anfíbios", "placements": [{"word": "QUITRIDIOMICOSE", "dir": "H", "row": 1, "col": 0, "num": 5, "clue": "Doença fúngica associada ao declínio populacional de anfíbios em diversas regiões do mundo."}, {"word": "CUTANEA", "dir": "V", "row": 0, "col": 1, "num": 1, "clue": "Tipo de respiração realizada diretamente através da pele."}, {"word": "BIDDER", "dir": "V", "row": 0, "col": 2, "num": 2, "clue": "Estrutura semelhante a um ovário presente em alguns anuros machos."}, {"word": "UREIA", "dir": "V", "row": 0, "col": 4, "num": 3, "clue": "Principal composto nitrogenado excretado pelos anfíbios adultos."}, {"word": "FEBRE", "dir": "V", "row": 0, "col": 14, "num": 4, "clue": "Resposta adaptativa na qual o animal busca temperaturas mais elevadas durante uma enfermidade."}]}, "mamiferos": {"title": "Mamíferos", "placements": [{"word": "MONOTREMADOS", "dir": "H", "row": 7, "col": 0, "num": 6, "clue": "Grupo de mamíferos que deposita ovos."}, {"word": "CECOTROFIA", "dir": "V", "row": 4, "col": 1, "num": 4, "clue": "Comportamento fisiológico de reingestão de cecotrofos para reaproveitamento nutricional."}, {"word": "DIAFRAGMA", "dir": "V", "row": 0, "col": 0, "num": 1, "clue": "Estrutura muscular que separa as cavidades torácica e abdominal."}, {"word": "PRIMATAS", "dir": "V", "row": 2, "col": 4, "num": 3, "clue": "Grupo de mamíferos que apresenta visão estereoscópica altamente desenvolvida."}, {"word": "CAPIVARA", "dir": "V", "row": 1, "col": 5, "num": 2, "clue": "Maior roedor do mundo."}, {"word": "ESTASE", "dir": "V", "row": 7, "col": 6, "num": 7, "clue": "Alteração caracterizada pela redução da motilidade gastrointestinal."}, {"word": "ANTA", "dir": "V", "row": 6, "col": 2, "num": 5, "clue": "Maior mamífero terrestre nativo do Brasil e importante dispersora de sementes."}]}, "repteis": {"title": "Répteis", "placements": [{"word": "ESTOMATITE", "dir": "H", "row": 3, "col": 0, "num": 5, "clue": "Processo inflamatório e infeccioso da cavidade oral de répteis."}, {"word": "ECDISE", "dir": "V", "row": 3, "col": 0, "num": 5, "clue": "Processo fisiológico periódico de renovação da pele."}, {"word": "DISECDISE", "dir": "V", "row": 1, "col": 1, "num": 2, "clue": "Alteração caracterizada pela troca incompleta ou anormal da pele."}, {"word": "URATO", "dir": "V", "row": 0, "col": 2, "num": 1, "clue": "Principal composto nitrogenado excretado pelos répteis."}, {"word": "FOSSETA", "dir": "V", "row": 2, "col": 3, "num": 3, "clue": "Estrutura sensorial capaz de detectar radiação infravermelha emitida por fontes de calor."}, {"word": "UVB", "dir": "H", "row": 0, "col": 2, "num": 1, "clue": "Faixa do espectro luminoso necessária para síntese de vitamina D3."}, {"word": "JACOBSON", "dir": "V", "row": 2, "col": 5, "num": 4, "clue": "Órgão responsável pela percepção química de partículas transportadas pela língua."}]}, "aves": {"title": "Aves", "placements": [{"word": "ASPERGILLUS", "dir": "H", "row": 7, "col": 0, "num": 6, "clue": "Gênero fúngico mais frequentemente associado à aspergilose aviária."}, {"word": "UROPIGIANA", "dir": "V", "row": 0, "col": 0, "num": 1, "clue": "Glândula localizada próxima à base da cauda responsável pela manutenção das penas."}, {"word": "RETRIZES", "dir": "V", "row": 0, "col": 1, "num": 2, "clue": "Penas localizadas na cauda, importantes para direção e estabilidade durante o voo."}, {"word": "SIRINGE", "dir": "V", "row": 1, "col": 3, "num": 3, "clue": "Estrutura localizada na bifurcação da traqueia responsável pela vocalização."}, {"word": "INGUVIO", "dir": "V", "row": 5, "col": 5, "num": 5, "clue": "Dilatação do esôfago utilizada para armazenamento temporário de alimento."}, {"word": "MOELA", "dir": "V", "row": 4, "col": 7, "num": 4, "clue": "Compartimento muscular responsável pela trituração mecânica do alimento."}, {"word": "PBFD", "dir": "V", "row": 7, "col": 2, "num": 7, "clue": "Doença viral caracterizada por alterações de penas e deformidades de bico em psitacídeos."}]}, "hematologia": {"title": "Hematologia", "placements": [{"word": "ANUCLEADAS", "dir": "H", "row": 6, "col": 0, "num": 6, "clue": "Característica das hemácias dos mamíferos."}, {"word": "TROMBOCITO", "dir": "V", "row": 0, "col": 3, "num": 2, "clue": "Célula envolvida na coagulação sanguínea de aves e répteis."}, {"word": "NUCLEADAS", "dir": "V", "row": 1, "col": 0, "num": 3, "clue": "Característica das hemácias de aves, répteis e anfíbios."}, {"word": "HEPARINA", "dir": "V", "row": 0, "col": 1, "num": 1, "clue": "Anticoagulante frequentemente recomendado para quelônios."}, {"word": "HEMACIA", "dir": "V", "row": 5, "col": 5, "num": 5, "clue": "Célula sanguínea responsável pelo transporte de oxigênio."}, {"word": "EDTA", "dir": "V", "row": 3, "col": 6, "num": 4, "clue": "Anticoagulante frequentemente utilizado em mamíferos."}]}};
 
-  <script>
-    const WORDS = [
-      {
-        num: 1, word: "SINANTROPICA", dir: "H", row: 0, col: 0,
-        clue: "Espécie que se adapta a viver próxima ao ser humano e aos ambientes modificados por ele, sem necessariamente ter sido domesticada."
-      },
-      {
-        num: 2, word: "SELVAGEM", dir: "H", row: 1, col: 0,
-        clue: "Animal que não passou por domesticação e mantém características naturais de vida livre, podendo apresentar comportamento reativo e defesa ativa."
-      },
-      {
-        num: 3, word: "NATIVA", dir: "V", row: 0, col: 4,
-        clue: "Espécie que ocorre naturalmente em determinada região ou ecossistema, sem ter sido introduzida pelo ser humano."
-      },
-      {
-        num: 4, word: "INVASORA", dir: "H", row: 3, col: 4,
-        clue: "Espécie exótica que se estabelece, se reproduz e causa impactos negativos ao ambiente, às espécies nativas, à economia ou à saúde."
-      },
-      {
-        num: 5, word: "DOMESTICO", dir: "V", row: 2, col: 9,
-        clue: "Animal pertencente a uma espécie que passou por processo de domesticação ao longo de gerações, com seleção zootécnica e adaptação à convivência com o ser humano."
-      },
-      {
-        num: 6, word: "EXOTICA", dir: "H", row: 8, col: 5,
-        clue: "Espécie encontrada fora de sua área natural de ocorrência, tendo sido introduzida intencionalmente ou acidentalmente."
-      },
-    ];
+let temaAtual=null, letterMap={}, numPos={};
 
-    const ROWS = 11, COLS = 12;
+function trocarTema(tema){
+  document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('ativo'));
+  document.querySelector(`.theme-btn[onclick="trocarTema('${tema}')"]`).classList.add('ativo');
+  temaAtual=tema;
+  renderCrossword(TEMAS[tema]);
+}
 
-    // Build letter map
-    const letterMap = {};
-    const cellWords = {}; // which words pass through each cell
-
-    WORDS.forEach(w => {
-      for (let i = 0; i < w.word.length; i++) {
-        const r = w.dir === 'H' ? w.row : w.row + i;
-        const c = w.dir === 'H' ? w.col + i : w.col;
-        const key = `${r},${c}`;
-        letterMap[key] = w.word[i];
-        if (!cellWords[key]) cellWords[key] = [];
-        cellWords[key].push(w.num);
-      }
-    });
-
-    // Number positions (first cell of each word)
-    const numPos = {};
-    WORDS.forEach(w => {
-      numPos[`${w.row},${w.col}`] = w.num;
-    });
-
-    // Build grid
-    const gridEl = document.getElementById('grid');
-
-    for (let r = 0; r < ROWS; r++) {
-      for (let c = 0; c < COLS; c++) {
-        const key = `${r},${c}`;
-        const div = document.createElement('div');
-        div.className = 'cell';
-
-        if (letterMap[key]) {
-          div.classList.add('cell-letra');
-          div.dataset.key = key;
-
-          if (numPos[key]) {
-            const num = document.createElement('span');
-            num.className = 'cell-num';
-            num.textContent = numPos[key];
-            div.appendChild(num);
-          }
-
-          const input = document.createElement('input');
-          input.type = 'text';
-          input.maxLength = 1;
-          input.className = 'cell-input';
-          input.dataset.key = key;
-          input.dataset.answer = letterMap[key];
-
-          input.addEventListener('input', e => {
-            e.target.value = e.target.value.toUpperCase().slice(-1);
-            // Remove correction colors on edit
-            e.target.parentElement.classList.remove('correta', 'errada');
-            document.getElementById('msg').textContent = '';
-            // Move to next cell
-            if (e.target.value) moveNext(r, c);
-          });
-
-          input.addEventListener('keydown', e => {
-            if (e.key === 'Backspace' && !e.target.value) movePrev(r, c);
-            if (e.key === 'ArrowRight') { e.preventDefault(); focusCell(r, c+1); }
-            if (e.key === 'ArrowLeft')  { e.preventDefault(); focusCell(r, c-1); }
-            if (e.key === 'ArrowDown')  { e.preventDefault(); focusCell(r+1, c); }
-            if (e.key === 'ArrowUp')    { e.preventDefault(); focusCell(r-1, c); }
-          });
-
-          input.addEventListener('focus', () => highlightWord(r, c));
-
-          div.appendChild(input);
-        } else {
-          div.classList.add('cell-vazia');
+function renderCrossword(data){
+  letterMap={}; numPos={};
+  document.getElementById('msg').textContent='';
+  let maxR=0, maxC=0;
+  data.placements.forEach(p=>{
+    const len=p.word.length;
+    maxR=Math.max(maxR, p.dir==='H'?p.row:p.row+len-1);
+    maxC=Math.max(maxC, p.dir==='H'?p.col+len-1:p.col);
+  });
+  data.placements.forEach(p=>{
+    for(let i=0;i<p.word.length;i++){
+      const r=p.dir==='H'?p.row:p.row+i, c=p.dir==='H'?p.col+i:p.col;
+      letterMap[r+','+c]=p.word[i];
+    }
+    numPos[p.row+','+p.col]=p.num;
+  });
+  const g=document.getElementById('grid');
+  g.innerHTML='';
+  g.style.gridTemplateColumns=`repeat(${maxC+1},36px)`;
+  g.style.gridTemplateRows=`repeat(${maxR+1},36px)`;
+  for(let r=0;r<=maxR;r++){
+    for(let c=0;c<=maxC;c++){
+      const key=r+','+c, div=document.createElement('div');
+      div.className='cell';
+      if(letterMap[key]){
+        div.classList.add('cell-letra'); div.dataset.key=key;
+        if(numPos[key]){
+          const n=document.createElement('span');
+          n.className='cell-num'; n.textContent=numPos[key]; div.appendChild(n);
         }
-
-        gridEl.appendChild(div);
-      }
-    }
-
-    function focusCell(r, c) {
-      const key = `${r},${c}`;
-      const input = document.querySelector(`input[data-key="${key}"]`);
-      if (input) input.focus();
-    }
-
-    function moveNext(r, c) {
-      // Try right first, then down
-      if (letterMap[`${r},${c+1}`]) { focusCell(r, c+1); return; }
-      if (letterMap[`${r+1},${c}`]) { focusCell(r+1, c); }
-    }
-
-    function movePrev(r, c) {
-      if (letterMap[`${r},${c-1}`]) { focusCell(r, c-1); return; }
-      if (letterMap[`${r-1},${c}`]) { focusCell(r-1, c); }
-    }
-
-    let activeWord = null;
-
-    function highlightWord(r, c) {
-      // Remove previous highlight
-      document.querySelectorAll('.cell-letra').forEach(el => {
-        el.style.background = '';
-      });
-      const key = `${r},${c}`;
-      if (!cellWords[key]) return;
-      // Highlight all cells of the first word through this cell
-      const wNum = cellWords[key][0];
-      const w = WORDS.find(x => x.num === wNum);
-      if (!w) return;
-      activeWord = wNum;
-      for (let i = 0; i < w.word.length; i++) {
-        const kr = w.dir === 'H' ? w.row : w.row + i;
-        const kc = w.dir === 'H' ? w.col + i : w.col;
-        const cell = document.querySelector(`.cell-letra[data-key="${kr},${kc}"]`);
-        if (cell && !cell.classList.contains('correta') && !cell.classList.contains('errada')) {
-          cell.style.background = 'rgba(90,125,95,0.1)';
-        }
-      }
-      // Highlight active pista
-      document.querySelectorAll('.pista-item').forEach(el => el.classList.remove('ativa'));
-      const pista = document.querySelector(`.pista-item[data-num="${wNum}"]`);
-      if (pista) { pista.classList.add('ativa'); pista.scrollIntoView({ block: 'nearest' }); }
-    }
-
-    function focusWord(num) {
-      const w = WORDS.find(x => x.num === num);
-      if (!w) return;
-      focusCell(w.row, w.col);
-    }
-
-    // Build pistas
-    const pistasH = document.getElementById('pistas-h');
-    const pistasV = document.getElementById('pistas-v');
-
-    WORDS.forEach(w => {
-      const div = document.createElement('div');
-      div.className = 'pista-item';
-      div.dataset.num = w.num;
-      div.innerHTML = `<span class="pista-num">${w.num}.</span><span class="pista-texto">${w.clue}</span>`;
-      div.addEventListener('click', () => focusWord(w.num));
-      if (w.dir === 'H') pistasH.appendChild(div);
-      else pistasV.appendChild(div);
-    });
-
-    function verificar() {
-      let acertos = 0, total = 0;
-      document.querySelectorAll('.cell-input').forEach(input => {
-        const cell = input.parentElement;
-        cell.classList.remove('correta', 'errada');
-        if (input.value) {
-          total++;
-          if (input.value === input.dataset.answer) {
-            cell.classList.add('correta');
-            acertos++;
-          } else {
-            cell.classList.add('errada');
-          }
-        }
-      });
-      const msg = document.getElementById('msg');
-      const totalCells = Object.keys(letterMap).length;
-      if (acertos === totalCells) {
-        msg.textContent = 'Parabéns! Todas as respostas estão corretas.';
-        msg.className = 'resultado-msg acerto';
+        const inp=document.createElement('input');
+        inp.type='text'; inp.maxLength=1; inp.className='cell-input';
+        inp.dataset.key=key; inp.dataset.answer=letterMap[key];
+        inp.addEventListener('input',e=>{
+          e.target.value=e.target.value.toUpperCase().slice(-1);
+          e.target.parentElement.classList.remove('correta','errada');
+          document.getElementById('msg').textContent='';
+          if(e.target.value) autoNext(r,c);
+        });
+        inp.addEventListener('keydown',e=>{
+          if(e.key==='Backspace'&&!e.target.value) autoPrev(r,c);
+          if(e.key==='ArrowRight'){e.preventDefault();focusCell(r,c+1);}
+          if(e.key==='ArrowLeft'){e.preventDefault();focusCell(r,c-1);}
+          if(e.key==='ArrowDown'){e.preventDefault();focusCell(r+1,c);}
+          if(e.key==='ArrowUp'){e.preventDefault();focusCell(r-1,c);}
+        });
+        inp.addEventListener('focus',()=>highlight(r,c));
+        div.appendChild(inp);
       } else {
-        msg.textContent = `${acertos} de ${totalCells} letras corretas.`;
-        msg.className = 'resultado-msg erro';
+        div.classList.add('cell-vazia');
       }
+      g.appendChild(div);
     }
+  }
+  const ph=document.getElementById('pistas-h'), pv=document.getElementById('pistas-v');
+  ph.innerHTML=''; pv.innerHTML='';
+  data.placements.forEach(p=>{
+    const div=document.createElement('div');
+    div.className='pista-item'; div.dataset.num=p.num; div.dataset.dir=p.dir;
+    div.innerHTML=`<span class="pista-num">${p.num}.</span><span class="pista-texto">${p.clue}</span>`;
+    div.addEventListener('click',()=>focusCell(p.row,p.col));
+    (p.dir==='H'?ph:pv).appendChild(div);
+  });
+}
 
-    function revelar() {
-      document.querySelectorAll('.cell-input').forEach(input => {
-        input.value = input.dataset.answer;
-        input.parentElement.classList.add('correta');
-        input.parentElement.classList.remove('errada');
-      });
-      document.getElementById('msg').textContent = '';
+function focusCell(r,c){
+  const inp=document.querySelector(`input[data-key="${r},${c}"]`);
+  if(inp) inp.focus();
+}
+
+function autoNext(r,c){
+  if(letterMap[r+','+(c+1)]) focusCell(r,c+1);
+  else if(letterMap[(r+1)+','+c]) focusCell(r+1,c);
+}
+
+function autoPrev(r,c){
+  if(letterMap[r+','+(c-1)]) focusCell(r,c-1);
+  else if(letterMap[(r-1)+','+c]) focusCell(r-1,c);
+}
+
+function highlight(r,c){
+  document.querySelectorAll('.cell-letra').forEach(el=>el.classList.remove('destacada'));
+  document.querySelectorAll('.pista-item').forEach(el=>el.classList.remove('ativa'));
+  const data=TEMAS[temaAtual];
+  const p=data.placements.find(p=>{
+    for(let i=0;i<p.word.length;i++){
+      const pr=p.dir==='H'?p.row:p.row+i, pc=p.dir==='H'?p.col+i:p.col;
+      if(pr===r&&pc===c) return true;
     }
+    return false;
+  });
+  if(!p) return;
+  for(let i=0;i<p.word.length;i++){
+    const pr=p.dir==='H'?p.row:p.row+i, pc=p.dir==='H'?p.col+i:p.col;
+    const cell=document.querySelector(`.cell-letra[data-key="${pr},${pc}"]`);
+    if(cell) cell.classList.add('destacada');
+  }
+  const pista=document.querySelector(`.pista-item[data-num="${p.num}"][data-dir="${p.dir}"]`);
+  if(pista){pista.classList.add('ativa');pista.scrollIntoView({block:'nearest'});}
+}
 
-    function limpar() {
-      document.querySelectorAll('.cell-input').forEach(input => {
-        input.value = '';
-        input.parentElement.classList.remove('correta', 'errada');
-        input.parentElement.style.background = '';
-      });
-      document.getElementById('msg').textContent = '';
+function verificar(){
+  let acertos=0, total=Object.keys(letterMap).length;
+  document.querySelectorAll('.cell-input').forEach(inp=>{
+    const cell=inp.parentElement;
+    cell.classList.remove('correta','errada');
+    if(inp.value){
+      if(inp.value===inp.dataset.answer){cell.classList.add('correta');acertos++;}
+      else cell.classList.add('errada');
     }
-  </script>
+  });
+  const msg=document.getElementById('msg');
+  if(acertos===total){msg.textContent='Parabéns! Todas as respostas estão corretas.';msg.className='msg acerto';}
+  else{msg.textContent=acertos+' de '+total+' letras corretas.';msg.className='msg erro';}
+}
 
+function revelar(){
+  document.querySelectorAll('.cell-input').forEach(inp=>{
+    inp.value=inp.dataset.answer;
+    inp.parentElement.classList.add('correta');
+    inp.parentElement.classList.remove('errada');
+  });
+  document.getElementById('msg').textContent='';
+}
+
+function limpar(){
+  document.querySelectorAll('.cell-input').forEach(inp=>{
+    inp.value='';
+    inp.parentElement.classList.remove('correta','errada','destacada');
+  });
+  document.getElementById('msg').textContent='';
+}
+
+trocarTema('conceitos');
+</script>
 </body>
 </html>
