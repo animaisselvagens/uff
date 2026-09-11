@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz — Animais Selvagens UFF</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+
+    :root {
+      --ink:        #12130f;
+      --ink-light:  #5a5d52;
+      --stone:      #8a8c83;
+      --mist:       #c8cac0;
+      --paper:      #f4f2ed;
+      --paper-warm: #ede9e0;
+      --white:      #fafaf7;
+      --green-deep: #1c3020;
+      --green-mid:  #2e4d34;
+      --green-sage: #5a7d5f;
+      --green-pale: #a8c5ab;
+      --rule:       rgba(18,19,15,0.1);
+      --rule-heavy: rgba(18,19,15,0.2);
+    }
+
+    body {
+      background: var(--paper);
+      font-family: "DM Sans", sans-serif;
+      font-weight: 300;
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: rgba(22,40,26,0.98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+    }
+
+    .nav-brand { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+    .nav-logo { height: 26px; width: auto; display: block; }
+    .nav-divider { width: 1px; height: 22px; background: rgba(255,255,255,0.12); }
+
+    .nav-title strong {
+      font-family: "Lora", serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fafaf7;
+      line-height: 1.2;
+      display: block;
+    }
+
+    .nav-title span {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #5a7d5f;
+    }
+
+    nav ul { list-style: none; display: flex; align-items: center; }
+
+    nav ul li a {
+      display: flex;
+      align-items: center;
+      height: 58px;
+      padding: 0 1rem;
+      text-decoration: none;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(200,210,200,0.65);
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    nav ul li a:hover, nav ul li a.active { color: #fafaf7; border-bottom-color: #5a7d5f; }
+
+    /* HEADER */
+    .page-header { background: var(--green-deep); padding: 5rem 2.5rem 2.5rem; margin-top: 58px; }
+    .page-header-inner { max-width: 1200px; margin: 0 auto; }
+
+    .page-eyebrow {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green-sage);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .page-eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 1.8rem;
+      height: 1px;
+      background: var(--green-sage);
+    }
+
+    .page-title {
+      font-family: "Lora", serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* CONTADOR */
+    .contador {
+      background: var(--white);
+      border-bottom: 1px solid var(--rule-heavy);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .cont-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--paper-warm);
+      border-radius: 50px;
+      padding: 0.5rem 1.1rem;
+      min-width: 65px;
+    }
+
+    .cont-num { font-family: "Lora", serif; font-size: 1.2rem; font-weight: 600; color: var(--ink); line-height: 1; }
+    .cont-num.verde { color: var(--green-mid); }
+    .cont-num.vermelho { color: #8a3030; }
+
+    .cont-label {
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-top: 0.2rem;
+    }
+
+    /* CATEGORIAS */
+    .categorias {
+      background: var(--paper-warm);
+      border-bottom: 1px solid var(--rule);
+      padding: 0.8rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .cat-btn {
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--ink-light);
+      background: var(--white);
+      border: 1px solid var(--rule-heavy);
+      padding: 0.35rem 0.85rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cat-btn:hover, .cat-btn.ativo {
+      background: var(--green-deep);
+      color: var(--white);
+      border-color: var(--green-deep);
+    }
+
+    /* PROGRESSO */
+    .progresso-bar {
+      background: var(--paper);
+      padding: 0.6rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .prog-texto { font-size: 0.72rem; color: var(--stone); white-space: nowrap; }
+
+    .prog-linha {
+      flex: 1;
+      height: 2px;
+      background: var(--rule-heavy);
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .prog-fill {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      background: var(--green-sage);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .prog-pct { font-size: 0.72rem; color: var(--stone); white-space: nowrap; }
+
+    /* QUIZ CARD */
+    .card-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2.5rem 2rem;
+    }
+
+    .quiz-card {
+      width: 100%;
+      max-width: 640px;
+      background: var(--white);
+      border: 1px solid var(--rule-heavy);
+      border-top: 3px solid var(--green-sage);
+      border-radius: 8px;
+      padding: 2.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .quiz-categoria {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green-sage);
+      margin-bottom: 1rem;
+    }
+
+    .quiz-pergunta {
+      font-family: "Lora", serif;
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.55;
+      margin-bottom: 1.7rem;
+    }
+
+    .quiz-opcoes { display: flex; flex-direction: column; gap: 0.65rem; }
+
+    .quiz-opcao {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      width: 100%;
+      text-align: left;
+      padding: 0.8rem 1.05rem;
+      background: var(--paper);
+      border: 1px solid var(--rule-heavy);
+      border-radius: 6px;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.84rem;
+      font-weight: 400;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quiz-opcao:hover:not(.certa):not(.errada):not(.desabilitada) {
+      border-color: var(--green-sage);
+      background: var(--paper-warm);
+    }
+
+    .opcao-letra {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 50%;
+      background: var(--paper-warm);
+      border: 1px solid var(--rule-heavy);
+      font-family: "Lora", serif;
+      font-weight: 600;
+      font-size: 0.72rem;
+      color: var(--ink-light);
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .opcao-texto { flex: 1; }
+
+    .quiz-opcao.certa { background: rgba(90,125,95,0.12); border-color: var(--green-mid); color: var(--green-mid); }
+    .quiz-opcao.certa .opcao-letra { background: var(--green-mid); border-color: var(--green-mid); color: var(--white); }
+
+    .quiz-opcao.errada { background: rgba(138,48,48,0.08); border-color: #8a3030; color: #8a3030; }
+    .quiz-opcao.errada .opcao-letra { background: #8a3030; border-color: #8a3030; color: var(--white); }
+
+    .quiz-opcao.desabilitada { cursor: default; }
+    .quiz-opcao.desabilitada:not(.certa):not(.errada) { opacity: 0.45; }
+
+    .quiz-feedback {
+      display: none;
+      margin-top: 1.3rem;
+      padding-top: 1.1rem;
+      border-top: 1px solid var(--rule);
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.8rem;
+      line-height: 1.65;
+      color: var(--ink-light);
+    }
+
+    .quiz-feedback.visivel { display: block; }
+    .quiz-feedback .fb-status { font-family: "Lora", serif; font-weight: 600; display: block; margin-bottom: 0.3rem; }
+    .quiz-feedback.acerto .fb-status { color: var(--green-mid); }
+    .quiz-feedback.erro .fb-status { color: #8a3030; }
+
+    .nav-btns { display: flex; gap: 0.6rem; width: 100%; max-width: 640px; margin-bottom: 0.8rem; }
+
+    .btn-nav {
+      flex: 1;
+      padding: 0.75rem;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 50px;
+      border: 1px solid var(--rule-heavy);
+      background: var(--white);
+      color: var(--ink-light);
+      transition: all 0.2s;
+    }
+
+    .btn-nav:hover { background: var(--paper-warm); color: var(--ink); }
+
+    .btn-proximo { flex: 1.5; background: var(--green-deep); color: var(--white); border-color: var(--green-deep); }
+    .btn-proximo:hover { background: var(--green-mid); border-color: var(--green-mid); }
+
+    .acoes { display: flex; gap: 0.6rem; width: 100%; max-width: 640px; }
+
+    .btn-acao {
+      flex: 1;
+      padding: 0.65rem;
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      cursor: pointer;
+      border-radius: 50px;
+      border: 1px solid var(--rule);
+      background: none;
+      color: var(--stone);
+      transition: all 0.2s;
+    }
+
+    .btn-acao:hover { background: var(--paper-warm); color: var(--ink); }
+    .btn-erros { border-color: rgba(138,48,48,0.2); color: #8a3030; }
+    .btn-erros:hover { background: #8a3030; color: var(--white); border-color: #8a3030; }
+
+    .atalhos { margin-top: 1.2rem; font-size: 0.65rem; color: var(--mist); text-align: center; }
+
+    @media (max-width: 900px) {
+      nav ul { display: none; }
+      .nav-inner { padding: 0 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <img class="nav-logo" src="data:image/png;base64,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" alt="UFF"/>
+      <div class="nav-divider"></div>
+      <div class="nav-title">
+        <strong>Animais Selvagens</strong>
+        <span>Medicina Veterinária · UFF</span>
+      </div>
+    </a>
+    <ul>
+      <li><a href="guia.html">Guia do Site</a></li>
+      <li><a href="atividades.html" class="active">Atividades Interativas</a></li>
+      <li><a href="contencao.html">Contenção Física</a></li>
+      <li><a href="producao.html">Produção Científica</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-eyebrow">Atividades Interativas</p>
+    <h1 class="page-title">Quiz</h1>
+  </div>
+</div>
+
+<div class="contador">
+  <div class="cont-item">
+    <span class="cont-num" id="cnt-total">0</span>
+    <span class="cont-label">Total</span>
+  </div>
+  <div class="cont-item">
+    <span class="cont-num verde" id="cnt-acertos">0</span>
+    <span class="cont-label">Acertos</span>
+  </div>
+  <div class="cont-item">
+    <span class="cont-num vermelho" id="cnt-erros">0</span>
+    <span class="cont-label">Erros</span>
+  </div>
+  <div class="cont-item">
+    <span class="cont-num" id="cnt-restam">0</span>
+    <span class="cont-label">Restam</span>
+  </div>
+</div>
+
+<div class="categorias">
+  <button class="cat-btn ativo" onclick="selecionarCat(this, 'todas')">Todas</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Conceitos')">Conceitos</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Contenção e Estresse')">Contenção e Estresse</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Anfíbios')">Anfíbios</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Répteis')">Répteis</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Aves')">Aves</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Mamíferos')">Mamíferos</button>
+  <button class="cat-btn" onclick="selecionarCat(this, 'Hematologia')">Hematologia</button>
+</div>
+
+<div class="progresso-bar">
+  <span class="prog-texto" id="prog-texto">1 / 0</span>
+  <div class="prog-linha">
+    <div class="prog-fill" id="prog-fill" style="width: 0%"></div>
+  </div>
+  <span class="prog-pct" id="prog-pct">0%</span>
+</div>
+
+<div class="card-area">
+
+  <div class="quiz-card" id="quiz-card">
+    <p class="quiz-categoria" id="quiz-categoria"></p>
+    <p class="quiz-pergunta" id="quiz-pergunta"></p>
+    <div class="quiz-opcoes" id="quiz-opcoes"></div>
+    <div class="quiz-feedback" id="quiz-feedback">
+      <span class="fb-status" id="fb-status"></span>
+      <span id="fb-texto"></span>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn-nav" onclick="anterior()">← Anterior</button>
+    <button class="btn-nav btn-proximo" onclick="proximo()">Próxima →</button>
+  </div>
+
+  <div class="acoes">
+    <button class="btn-acao" onclick="embaralhar()">Embaralhar</button>
+    <button class="btn-acao" onclick="reiniciar()">Reiniciar</button>
+    <button class="btn-acao btn-erros" onclick="revisarErros()">Revisar erros</button>
+  </div>
+
+  <p class="atalhos">1‑4 = escolher alternativa · Enter = próxima · ← = anterior</p>
+
+</div>
+
+<script>
+const QUESTIONS = [
+  // CONCEITOS
+  { cat: 'Conceitos', q: 'Qual das alternativas define corretamente um animal selvagem?',
+    op: ['Animal cujas características foram modificadas por manejo e seleção ao longo de gerações', 'Animal cujas características genotípicas e fenotípicas permanecem próximas às de populações naturais, sem alterações significativas por domesticação', 'Espécie pertencente exclusivamente à fauna nativa brasileira', 'Espécie cuja distribuição natural não inclui o Brasil'],
+    correta: 1, exp: 'Selvagem refere-se à manutenção das características naturais da espécie, independentemente de sua origem geográfica ser ou não o Brasil.' },
+  { cat: 'Conceitos', q: 'Um animal silvestre é, por definição:',
+    op: ['Um animal exótico mantido em cativeiro', 'Um animal pertencente à fauna nativa brasileira', 'Um animal que se beneficia de ambientes urbanos', 'Um animal domesticado ao longo de gerações'],
+    correta: 1, exp: 'Silvestre está ligado à origem geográfica: pertence à fauna nativa do Brasil, independentemente do grau de contato com humanos.' },
+  { cat: 'Conceitos', q: 'Uma espécie sinantrópica é aquela que:',
+    op: ['Foi introduzida fora de sua área de distribuição natural e causa impactos negativos', 'Vive próxima às populações humanas, beneficiando-se de ambientes modificados, sem ter sido domesticada', 'Depende exclusivamente de áreas de conservação para sobreviver', 'Foi selecionada geneticamente para conviver com o homem'],
+    correta: 1, exp: 'Pombos-domésticos, ratos-de-telhado e baratas são exemplos clássicos de espécies sinantrópicas.' },
+  { cat: 'Conceitos', q: 'Qual das opções é um exemplo clássico de espécie sinantrópica?',
+    op: ['Onça-pintada', 'Rato-de-telhado', 'Mico-leão-dourado', 'Jacaré-de-papo-amarelo'],
+    correta: 1, exp: 'O rato-de-telhado se beneficia de ambientes urbanos sem ter sido domesticado.' },
+  { cat: 'Conceitos', q: 'A conservação in situ é caracterizada por:',
+    op: ['Ações realizadas fora do ambiente natural da espécie, como em zoológicos', 'Estratégias realizadas no próprio ambiente natural da espécie', 'Manutenção exclusiva em criadouros comerciais', 'Reintrodução de espécies exóticas invasoras'],
+    correta: 1, exp: 'In situ significa "no local": a conservação ocorre no habitat natural da espécie.' },
+  { cat: 'Conceitos', q: 'Um exemplo de ação de conservação EX SITU é:',
+    op: ['Monitoramento de população em unidade de conservação', 'Manutenção de espécie em zoológico ou criadouro', 'Fiscalização de área de proteção ambiental', 'Restauração de habitat degradado no bioma original'],
+    correta: 1, exp: 'Ex situ significa "fora do local": zoológicos e criadouros são exemplos clássicos.' },
+  { cat: 'Conceitos', q: 'Qual é considerada a principal causa de extinção de espécies atualmente?',
+    op: ['Introdução de espécies exóticas invasoras', 'Tráfico de animais silvestres', 'Destruição e fragmentação de habitats', 'Mudanças climáticas globais'],
+    correta: 2, exp: 'A introdução de espécies exóticas invasoras é apontada como a segunda principal causa.' },
+  { cat: 'Conceitos', q: 'A principal função do CETAS é:',
+    op: ['Fiscalizar o comércio internacional de espécies ameaçadas', 'Receber, identificar, avaliar, reabilitar e destinar animais silvestres', 'Emitir licenças de manejo de fauna silvestre', 'Regulamentar a atuação do médico veterinário com fauna'],
+    correta: 1, exp: 'CETAS = Centro de Triagem de Animais Silvestres.' },
+  { cat: 'Conceitos', q: 'O tráfico de animais silvestres está diretamente associado a qual consequência?',
+    op: ['Aumento da biodiversidade local', 'Disseminação de doenças e perda de biodiversidade', 'Redução do estresse populacional das espécies traficadas', 'Controle natural de espécies invasoras'],
+    correta: 1, exp: 'O tráfico favorece a disseminação de patógenos e compromete a biodiversidade das populações de origem.' },
+
+  { cat: 'Conceitos', q: 'Uma espécie exótica invasora é aquela que:',
+    op: ['É nativa do Brasil mas ocupa múltiplos biomas', 'Foi introduzida fora de sua área de distribuição natural e causa impactos negativos às espécies nativas ou aos ecossistemas', 'Vive em áreas urbanas sem causar prejuízo ambiental', 'Foi domesticada e depois solta na natureza'],
+    correta: 1, exp: 'Diferencia-se da espécie sinantrópica pelo caráter de dano ativo ao ecossistema invadido.' },
+  { cat: 'Conceitos', q: 'O termo "animal exótico" refere-se a:',
+    op: ['Espécie cuja distribuição geográfica natural não inclui o território brasileiro', 'Espécie nativa mantida fora de seu bioma de origem', 'Espécie doméstica criada em cativeiro', 'Espécie silvestre ameaçada de extinção'],
+    correta: 0, exp: 'A origem geográfica define o caráter exótico, independentemente do grau de contato com humanos.' },
+  { cat: 'Conceitos', q: 'Biodiversidade é definida como:',
+    op: ['O número total de indivíduos de uma única espécie em determinado bioma', 'A variabilidade de organismos vivos, incluindo diversidade genética, de espécies e de ecossistemas', 'A quantidade de áreas de conservação existentes em um país', 'O conjunto de espécies domesticadas ao longo da história'],
+    correta: 1, exp: 'O conceito abrange três níveis: genético, de espécies e de ecossistemas.' },
+  { cat: 'Conceitos', q: 'Os serviços ambientais correspondem a:',
+    op: ['Programas governamentais de fiscalização ambiental', 'Processos ecológicos que sustentam a vida humana e o funcionamento dos ecossistemas', 'Atividades de manejo em cativeiro', 'Convênios internacionais de proteção à fauna'],
+    correta: 1, exp: 'Incluem, por exemplo, polinização, purificação da água e regulação climática.' },
+  // CONTENÇÃO E ESTRESSE
+  { cat: 'Contenção e Estresse', q: 'Qual é o principal objetivo da contenção física de um animal selvagem?',
+    op: ['Reduzir o metabolismo basal do animal', 'Garantir a segurança do animal e da equipe durante o manejo', 'Substituir a necessidade de anestesia em qualquer procedimento', 'Aumentar o tempo de manuseio para observação comportamental'],
+    correta: 1, exp: 'A contenção física visa restringir o movimento com segurança para o animal e para quem o manipula.' },
+  { cat: 'Contenção e Estresse', q: 'A miopatia de captura está associada a:',
+    op: ['Deficiência nutricional crônica de vitamina D', 'Estresse intenso durante captura, contenção ou transporte, com lesão muscular e possível insuficiência renal', 'Infecção bacteriana secundária a ferimentos de contenção', 'Reação alérgica a fármacos anestésicos'],
+    correta: 1, exp: 'É uma síndrome de estresse agudo, com rabdomiólise e acidose metabólica.' },
+  { cat: 'Contenção e Estresse', q: 'Por que aves não devem ser contidas com compressão da região peitoral?',
+    op: ['Porque pode causar fratura do esterno com facilidade', 'Porque a ventilação depende dos movimentos do esterno e da musculatura respiratória', 'Porque a região peitoral concentra os principais vasos sanguíneos', 'Porque a compressão ativa o reflexo de tanatose'],
+    correta: 1, exp: 'A compressão do peito impede os movimentos respiratórios das aves, podendo levar à asfixia.' },
+  { cat: 'Contenção e Estresse', q: 'A contenção de répteis pela cabeça deve ser evitada principalmente porque:',
+    op: ['Répteis possuem glândulas de veneno na região cervical', 'Possuem apenas um côndilo occipital, o que aumenta o risco de lesão cervical', 'A pele da região cervical é extremamente sensível ao toque', 'O reflexo de mordida é mais intenso quando a cabeça é contida'],
+    correta: 1, exp: 'O côndilo occipital único torna a articulação atlanto-occipital mais vulnerável a lesões.' },
+  { cat: 'Contenção e Estresse', q: 'Qual equipamento é indicado para a contenção segura de serpentes peçonhentas?',
+    op: ['Rede de captura de malha fina', 'Tubo de acrílico', 'Coleira de contenção cervical', 'Manga de compressão pneumática'],
+    correta: 1, exp: 'O tubo de acrílico permite manipular a serpente sem exposição direta à peçonha.' },
+  { cat: 'Contenção e Estresse', q: 'A tanatose é definida como:',
+    op: ['Estado de imobilidade induzido por sedação química', 'Comportamento defensivo em que o animal simula estar morto', 'Resposta fisiológica de aumento da frequência cardíaca', 'Reflexo de fuga imediato diante de um predador'],
+    correta: 1, exp: 'É uma estratégia antipredação observada em diversas espécies silvestres.' },
+  { cat: 'Contenção e Estresse', q: 'As três fases da Síndrome Geral de Adaptação são, na ordem correta:',
+    op: ['Exaustão, alarme e resistência', 'Alarme, adaptação (resistência) e exaustão', 'Resistência, alarme e recuperação', 'Alarme, exaustão e recuperação'],
+    correta: 1, exp: 'Alarme → resistência (adaptação) → exaustão, quando o estressor persiste além da capacidade adaptativa.' },
+  { cat: 'Contenção e Estresse', q: 'O que diferencia eustresse de distresse?',
+    op: ['Eustresse ocorre apenas em animais domésticos', 'Eustresse favorece a adaptação sem comprometer o bem-estar; distresse excede a capacidade adaptativa e traz consequências negativas', 'Distresse é sempre de curta duração, enquanto eustresse é crônico', 'Não há diferença fisiológica entre os dois termos'],
+    correta: 1, exp: 'Distresse é o estresse que ultrapassa a capacidade do animal de se adaptar de forma saudável.' },
+  { cat: 'Contenção e Estresse', q: 'O condicionamento operante com reforço positivo, aplicado ao manejo de animais selvagens, tem como principal vantagem:',
+    op: ['Eliminar totalmente a necessidade de contenção física em qualquer contexto', 'Reduzir a resposta ao estresse ao basear-se na cooperação voluntária do animal', 'Substituir integralmente o uso de contenção química em cirurgias', 'Aumentar a dependência do animal ao contato humano direto'],
+    correta: 1, exp: 'O treinamento cooperativo associa o comportamento desejado a uma consequência positiva, reduzindo o estresse do manejo.' },
+
+  { cat: 'Contenção e Estresse', q: 'Contenção química é definida como:',
+    op: ['Uso exclusivo de barreiras físicas para reduzir o movimento do animal', 'Utilização de fármacos para restringir parcial ou totalmente a movimentação do animal', 'Técnica de condicionamento comportamental sem uso de fármacos', 'Procedimento cirúrgico de imobilização permanente'],
+    correta: 1, exp: 'Difere da contenção física por depender de agentes farmacológicos.' },
+  { cat: 'Contenção e Estresse', q: 'Como prevenir a miopatia de captura?',
+    op: ['Prolongando o tempo de contenção para permitir adaptação do animal', 'Reduzindo o tempo de contenção, minimizando o estresse e utilizando contenção química quando indicada', 'Evitando o uso de qualquer tipo de sedação', 'Aumentando a frequência de manuseio do animal'],
+    correta: 1, exp: 'Minimizar tempo e intensidade do manejo reduz o risco de lesão muscular associada ao estresse agudo.' },
+  { cat: 'Contenção e Estresse', q: 'Qual cuidado deve ser tomado durante a contenção de anfíbios?',
+    op: ['Utilizar luvas com talco para melhorar a aderência', 'Evitar contato com substâncias químicas e utilizar luvas sem talco', 'Manter o animal totalmente submerso durante todo o manejo', 'Aplicar álcool na pele antes do manuseio'],
+    correta: 1, exp: 'A pele altamente permeável dos anfíbios absorve facilmente substâncias químicas, incluindo talco.' },
+  { cat: 'Contenção e Estresse', q: 'Cite EPIs frequentemente indicados no manejo de animais selvagens:',
+    op: ['Luvas, máscara e óculos de proteção', 'Apenas luvas de couro', 'Botas impermeáveis e capacete de obra', 'Avental cirúrgico estéril e touca descartável'],
+    correta: 0, exp: 'Esses equipamentos protegem contra mordidas, arranhões e exposição a secreções.' },
+  { cat: 'Contenção e Estresse', q: 'Na definição clássica, estresse é:',
+    op: ['Uma doença infecciosa que afeta animais em cativeiro', 'Processo fisiológico e neuro-hormonal pelo qual o organismo passa para enfrentar uma mudança ambiental, geralmente desfavorável', 'Um comportamento aprendido exclusivo de animais domesticados', 'Uma resposta puramente comportamental, sem componente fisiológico'],
+    correta: 1, exp: 'Envolve ativação neuroendócrina, não apenas uma reação comportamental isolada.' },
+  { cat: 'Contenção e Estresse', q: 'Um estressor é definido como:',
+    op: ['A resposta fisiológica do organismo ao desafio', 'O estímulo em si, o agente que desencadeia a resposta de estresse', 'A fase final da Síndrome Geral de Adaptação', 'Um hormônio liberado exclusivamente durante o eustresse'],
+    correta: 1, exp: 'É importante distinguir o estímulo (estressor) da resposta do organismo a ele (estresse).' },
+  { cat: 'Contenção e Estresse', q: 'A ausência total de desafios no ambiente de um animal cativo pode levar a:',
+    op: ['Melhora total do bem-estar, sem riscos associados', 'Tédio, apatia e estereotipias', 'Aumento da miopatia de captura', 'Redução da tanatose'],
+    correta: 1, exp: 'Assim como o excesso de estresse, a falta completa de estímulos também é prejudicial ao bem-estar animal.' },
+  { cat: 'Contenção e Estresse', q: 'As categorias de agentes estressores incluem:',
+    op: ['Apenas estressores físicos e químicos', 'Somáticos, psicológicos, comportamentais e mistos', 'Apenas estressores ambientais e nutricionais', 'Genéticos, virais e bacterianos'],
+    correta: 1, exp: 'Essa classificação ajuda a identificar a origem do estressor para orientar o manejo.' },
+  { cat: 'Contenção e Estresse', q: 'Por que o confinamento tende a intensificar o estresse de um animal selvagem?',
+    op: ['Porque reduz a exposição a predadores naturais', 'Porque elimina a possibilidade de fuga do animal', 'Porque aumenta a disponibilidade de alimento', 'Porque estimula o comportamento de tanatose'],
+    correta: 1, exp: 'A impossibilidade de fuga é um dos fatores mais associados à intensidade da resposta ao estresse em cativeiro.' },
+  // ANFÍBIOS
+  { cat: 'Anfíbios', q: 'A alta permeabilidade da pele dos anfíbios está diretamente relacionada a:',
+    op: ['Menor sensibilidade a variações de temperatura', 'Absorção de água por osmose e trocas gasosas cutâneas', 'Maior resistência a agentes químicos tópicos', 'Impermeabilização natural contra parasitas externos'],
+    correta: 1, exp: 'A pele permeável permite tanto a absorção de água quanto parte da respiração dos anfíbios.' },
+  { cat: 'Anfíbios', q: 'Quais são os tipos de respiração observados em anfíbios?',
+    op: ['Apenas pulmonar e cutânea', 'Cutânea, pulmonar, branquial e bucofaríngea', 'Apenas branquial durante toda a vida', 'Cutânea, pulmonar e traqueal'],
+    correta: 1, exp: 'Os anfíbios podem apresentar até quatro tipos de respiração, variando conforme a espécie e a fase de vida.' },
+  { cat: 'Anfíbios', q: 'O coração dos anfíbios adultos é composto por:',
+    op: ['Dois átrios e dois ventrículos', 'Um átrio e um ventrículo', 'Dois átrios e um ventrículo', 'Três átrios e um ventrículo'],
+    correta: 2, exp: 'O ventrículo único favorece certa mistura de sangue oxigenado e não oxigenado.' },
+  { cat: 'Anfíbios', q: 'A quitridiomicose, uma das principais causas do declínio mundial de anfíbios, é causada por:',
+    op: ['Um vírus que afeta o sistema respiratório', 'Um fungo que compromete a função da pele', 'Uma bactéria que afeta o sistema nervoso central', 'Um protozoário transmitido por vetores aquáticos'],
+    correta: 1, exp: 'O fungo compromete a pele, estrutura vital para respiração e equilíbrio hídrico dos anfíbios.' },
+  { cat: 'Anfíbios', q: 'Qual composto nitrogenado é produzido pela maioria dos anfíbios adultos?',
+    op: ['Amônia', 'Ácido úrico', 'Ureia', 'Creatinina'],
+    correta: 2, exp: 'A excreção de ureia está associada ao ambiente semiaquático dos anfíbios adultos.' },
+  { cat: 'Anfíbios', q: 'O órgão de Bidder, presente em alguns anuros machos, é:',
+    op: ['Uma glândula de veneno cutânea', 'Uma estrutura semelhante a um ovário', 'Um receptor sensorial de temperatura', 'Uma câmara acessória do coração'],
+    correta: 1, exp: 'É um resquício embrionário com potencial de desenvolvimento em tecido ovariano.' },
+  { cat: 'Anfíbios', q: 'A deficiência de qual vitamina pode causar redução da produção de muco em anfíbios?',
+    op: ['Vitamina D3', 'Vitamina A', 'Vitamina B12', 'Vitamina C'],
+    correta: 1, exp: 'A vitamina A é essencial para a integridade do epitélio e a produção de muco cutâneo.' },
+  { cat: 'Anfíbios', q: 'A febre comportamental em anfíbios consiste em:',
+    op: ['Redução espontânea da temperatura corporal para conter infecções', 'Busca ativa por temperaturas mais elevadas para auxiliar no combate a enfermidades', 'Elevação da frequência respiratória durante quadros febris', 'Hibernação induzida por agentes patogênicos'],
+    correta: 1, exp: 'Por serem ectotérmicos, os anfíbios regulam a temperatura corporal buscando ambientes mais quentes.' },
+  { cat: 'Anfíbios', q: 'Os anfíbios, diferentemente dos mamíferos, não possuem:',
+    op: ['Sistema circulatório fechado', 'Linfonodos', 'Corações linfáticos', 'Pele vascularizada'],
+    correta: 1, exp: 'Em vez de linfonodos, os anfíbios contam com corações linfáticos para auxiliar a circulação da linfa.' },
+
+  { cat: 'Anfíbios', q: 'Assim como répteis e aves, os anfíbios apresentam hemácias:',
+    op: ['Anucleadas e menores', 'Nucleadas', 'Ausentes na fase larval', 'Fragmentadas em múltiplos núcleos'],
+    correta: 1, exp: 'A presença de núcleo nas hemácias é comum a anfíbios, répteis e aves, diferente dos mamíferos.' },
+  { cat: 'Anfíbios', q: 'Qual a principal função dos corações linfáticos dos anfíbios?',
+    op: ['Bombear sangue arterial para os pulmões', 'Auxiliar o retorno da linfa para a circulação sistêmica', 'Produzir hemácias nucleadas', 'Regular a temperatura corporal'],
+    correta: 1, exp: 'Substituem, em parte, a função exercida pelos linfonodos em outros grupos.' },
+  // RÉPTEIS
+  { cat: 'Répteis', q: 'Os répteis são considerados o primeiro grupo de vertebrados a:',
+    op: ['Desenvolver pulmões funcionais', 'Se reproduzir de forma independente da água', 'Apresentar hemácias nucleadas', 'Realizar ecdise periódica'],
+    correta: 1, exp: 'O ovo amniótico dos répteis permitiu a reprodução em ambientes terrestres, sem dependência da água.' },
+  { cat: 'Répteis', q: 'O principal composto nitrogenado excretado pelos répteis é:',
+    op: ['Ureia', 'Amônia', 'Ácido úrico', 'Creatinina'],
+    correta: 2, exp: 'A excreção de ácido úrico permite maior economia de água, vantajosa em ambientes terrestres.' },
+  { cat: 'Répteis', q: 'O sistema porta-renal dos répteis implica que:',
+    op: ['Todo o sangue arterial passa obrigatoriamente pelos rins antes da circulação sistêmica', 'Parte do sangue dos membros posteriores passa pelos rins antes de retornar à circulação sistêmica', 'Os rins recebem apenas sangue proveniente dos membros anteriores', 'A filtração renal ocorre exclusivamente durante a ecdise'],
+    correta: 1, exp: 'Esse desvio vascular tem implicações diretas na farmacocinética de medicamentos aplicados nos membros posteriores.' },
+  { cat: 'Répteis', q: 'Por que medicamentos nefrotóxicos devem ser evitados nos membros posteriores de répteis?',
+    op: ['Porque a absorção nessa região é mais lenta', 'Devido ao sistema porta-renal, que direciona parte do sangue dessa região aos rins', 'Porque a pele dos membros posteriores é mais permeável a fármacos', 'Porque essa região concentra o órgão vomeronasal'],
+    correta: 1, exp: 'O fármaco pode passar pelos rins em maior concentração antes da diluição sistêmica, aumentando o risco de nefrotoxicidade.' },
+  { cat: 'Répteis', q: 'A disecdise é definida como:',
+    op: ['Processo normal e completo de troca de pele', 'Troca incompleta ou anormal da pele', 'Ausência total de muda de pele', 'Regeneração acelerada de escamas após lesão'],
+    correta: 1, exp: 'Frequentemente associada a condições ambientais inadequadas, como baixa umidade.' },
+  { cat: 'Répteis', q: 'O órgão vomeronasal (de Jacobson) tem como função:',
+    op: ['Detectar variações de temperatura ambiental', 'Receber informações químicas captadas pela língua', 'Regular a produção de vitamina D3', 'Auxiliar na troca gasosa cutânea'],
+    correta: 1, exp: 'A língua bífida coleta partículas químicas do ambiente e as leva a esse órgão sensorial.' },
+  { cat: 'Répteis', q: 'A radiação UVB é fundamental para répteis principalmente porque permite:',
+    op: ['A síntese de vitamina D3, favorecendo a absorção de cálcio', 'A regulação direta da temperatura corporal', 'A produção de melanina protetora na pele', 'A estimulação do apetite'],
+    correta: 0, exp: 'Sem UVB adequado, répteis podem desenvolver doença óssea metabólica por deficiência de cálcio.' },
+  { cat: 'Répteis', q: 'Um sinal clínico clássico da hipovitaminose A em quelônios é:',
+    op: ['Fibropapilomatose', 'Edema palpebral', 'Exsudato caseoso oral', 'Disecdise generalizada'],
+    correta: 1, exp: 'O edema palpebral compromete a visão e é um achado característico dessa deficiência nutricional.' },
+  { cat: 'Répteis', q: 'A fibropapilomatose é uma doença que acomete principalmente:',
+    op: ['Serpentes peçonhentas', 'Lagartos terrestres', 'Tartarugas marinhas', 'Jacarés de vida livre'],
+    correta: 2, exp: 'Caracteriza-se pela formação de tumores que podem comprometer alimentação, visão e locomoção.' },
+
+  { cat: 'Répteis', q: 'A ecdise é definida como:',
+    op: ['Processo de troca periódica da pele', 'Troca incompleta ou anormal da pele', 'Processo de digestão em répteis', 'Mecanismo de termorregulação comportamental'],
+    correta: 0, exp: 'É um processo fisiológico normal; quando ocorre de forma incompleta, é chamada de disecdise.' },
+  { cat: 'Répteis', q: 'A fosseta loreal, presente em serpentes como jararacas e cascavéis, tem como função:',
+    op: ['Detectar variações de temperatura (radiação infravermelha) emitidas por presas ou predadores', 'Auxiliar na percepção de vibrações do solo', 'Regular a produção de veneno', 'Facilitar a troca gasosa cutânea'],
+    correta: 0, exp: 'É uma estrutura termorreceptora que auxilia na detecção de presas de sangue quente.' },
+  { cat: 'Répteis', q: 'A estomatite infecciosa em répteis é caracterizada por:',
+    op: ['Um processo infeccioso e inflamatório da cavidade oral', 'Uma doença viral exclusiva de serpentes peçonhentas', 'Uma alteração comportamental associada ao estresse de contenção', 'Uma deficiência nutricional de vitamina D3'],
+    correta: 0, exp: 'É popularmente conhecida como "boca podre" e requer atenção veterinária.' },
+  { cat: 'Répteis', q: 'Um sinal clínico frequentemente observado na estomatite infecciosa é:',
+    op: ['Edema palpebral bilateral', 'Exsudato caseoso na cavidade oral', 'Disecdise generalizada', 'Fibropapilomatose lingual'],
+    correta: 1, exp: 'O exsudato caseoso na boca é um achado clínico característico dessa condição.' },
+  { cat: 'Répteis', q: 'Qual a principal consequência de um quadro severo de fibropapilomatose em tartarugas marinhas?',
+    op: ['Aumento da fertilidade da fêmea afetada', 'Comprometimento da alimentação, visão e locomoção', 'Aceleração do processo de ecdise', 'Resistência aumentada a infecções secundárias'],
+    correta: 1, exp: 'Os tumores podem crescer ao redor dos olhos, nadadeiras e boca, prejudicando funções vitais.' },
+  // AVES
+  { cat: 'Aves', q: 'A única glândula verdadeira das aves é a:',
+    op: ['Glândula tireoide', 'Glândula uropigiana', 'Glândula adrenal', 'Glândula salivar'],
+    correta: 1, exp: 'Localizada próxima à base da cauda, produz secreção usada na impermeabilização das penas.' },
+  { cat: 'Aves', q: 'As penas responsáveis pelo isolamento térmico são chamadas de:',
+    op: ['Rêmiges', 'Retrizes', 'Plúmulas', 'Coberteiras'],
+    correta: 2, exp: 'As plúmulas formam uma camada interna que retém o calor corporal.' },
+  { cat: 'Aves', q: 'A siringe, órgão responsável pela vocalização das aves, está localizada:',
+    op: ['Na laringe', 'Na bifurcação da traqueia', 'No inglúvio', 'Nos sacos aéreos'],
+    correta: 1, exp: 'Diferente dos mamíferos, a vocalização das aves não depende da laringe.' },
+  { cat: 'Aves', q: 'A digestão química no trato gastrointestinal das aves ocorre principalmente no:',
+    op: ['Inglúvio', 'Proventrículo', 'Ventrículo (moela)', 'Cloaca'],
+    correta: 1, exp: 'O proventrículo secreta enzimas e ácido clorídrico para a digestão química.' },
+  { cat: 'Aves', q: 'A digestão mecânica do alimento nas aves ocorre no:',
+    op: ['Proventrículo', 'Inglúvio', 'Ventrículo (moela)', 'Duodeno'],
+    correta: 2, exp: 'A moela tritura o alimento com auxílio de contrações musculares e, em algumas espécies, de grit ingerido.' },
+  { cat: 'Aves', q: 'Os sacos aéreos das aves têm como função:',
+    op: ['Realizar trocas gasosas diretamente', 'Auxiliar a ventilação pulmonar e reduzir o peso corporal', 'Armazenar temporariamente o alimento ingerido', 'Produzir muco protetor das vias respiratórias'],
+    correta: 1, exp: 'Os sacos aéreos não realizam trocas gasosas, mas otimizam o fluxo de ar pelos pulmões.' },
+  { cat: 'Aves', q: 'A PBFD (doença do bico e das penas dos psitacídeos) é causada por:',
+    op: ['Um fungo oportunista', 'Um circovírus aviário', 'Uma bactéria gram-negativa', 'Um protozoário sanguíneo'],
+    correta: 1, exp: 'Provoca alterações características de penas e deformidades de bico em psitacídeos.' },
+  { cat: 'Aves', q: 'A aspergilose aviária, causada principalmente por Aspergillus fumigatus, afeta predominantemente:',
+    op: ['O sistema digestório', 'O sistema respiratório', 'O sistema nervoso central', 'O sistema tegumentar'],
+    correta: 1, exp: 'Os sacos aéreos e pulmões das aves são especialmente vulneráveis a essa infecção fúngica.' },
+  { cat: 'Aves', q: 'Os três compartimentos da cloaca das aves são:',
+    op: ['Proventrículo, ventrículo e duodeno', 'Coprodeo, urodeo e proctodeo', 'Inglúvio, proventrículo e ventrículo', 'Cloaca anterior, média e posterior'],
+    correta: 1, exp: 'Cada compartimento recebe, respectivamente, fezes, urina/produtos reprodutivos, antes de sua saída conjunta.' },
+
+  { cat: 'Aves', q: 'Assinale a alternativa que NÃO corresponde a uma função primária das penas das aves:',
+    op: ['Voo', 'Termorregulação', 'Impermeabilização', 'Produção de leite para os filhotes'],
+    correta: 3, exp: 'Voo, termorregulação e impermeabilização são funções bem estabelecidas das penas; a produção de leite é exclusiva de mamíferos.' },
+  { cat: 'Aves', q: 'As penas localizadas na cauda das aves são chamadas de:',
+    op: ['Rêmiges', 'Retrizes', 'Plúmulas', 'Coberteiras'],
+    correta: 1, exp: 'As retrizes têm papel importante na direção e estabilidade durante o voo.' },
+  { cat: 'Aves', q: 'As penas localizadas nas asas das aves são chamadas de:',
+    op: ['Rêmiges', 'Retrizes', 'Plúmulas', 'Coberteiras'],
+    correta: 0, exp: 'As rêmiges são fundamentais para a sustentação e propulsão durante o voo.' },
+  { cat: 'Aves', q: 'Qual a principal função do inglúvio nas aves?',
+    op: ['Digestão química do alimento', 'Armazenamento temporário de alimento', 'Trituração mecânica do alimento', 'Produção de secreção uropigiana'],
+    correta: 1, exp: 'O inglúvio é uma dilatação do esôfago que permite à ave se alimentar rapidamente e digerir aos poucos.' },
+  { cat: 'Aves', q: 'Quantos ciclos respiratórios são necessários para que o ar percorra completamente o sistema respiratório das aves?',
+    op: ['Um ciclo', 'Dois ciclos', 'Três ciclos', 'Quatro ciclos'],
+    correta: 1, exp: 'O fluxo unidirecional de ar pelos pulmões, mediado pelos sacos aéreos, exige dois ciclos completos.' },
+  { cat: 'Aves', q: 'Um sinal clínico clássico da PBFD (doença do bico e das penas) é:',
+    op: ['Edema palpebral bilateral', 'Alterações de penas e deformidades de bico', 'Exsudato caseoso oral', 'Estase gastrointestinal'],
+    correta: 1, exp: 'O circovírus aviário compromete o desenvolvimento normal de penas e bico.' },
+  { cat: 'Aves', q: 'Por que aves não devem permanecer longos períodos em jejum?',
+    op: ['Porque possuem baixa taxa metabólica e risco de hipotermia', 'Devido à alta taxa metabólica e ao risco de hipoglicemia', 'Porque o inglúvio se atrofia rapidamente sem uso', 'Porque o jejum acelera a ecdise das penas'],
+    correta: 1, exp: 'O metabolismo elevado das aves torna o jejum prolongado especialmente perigoso.' },
+  // MAMÍFEROS
+  { cat: 'Mamíferos', q: 'A característica que define os mamíferos como grupo é a presença de:',
+    op: ['Pelos em todo o corpo', 'Glândulas mamárias', 'Diafragma muscular', 'Hemácias anucleadas'],
+    correta: 1, exp: 'A presença de glândulas mamárias, produtoras de leite, é a característica definidora do grupo.' },
+  { cat: 'Mamíferos', q: 'Diferentemente de aves e répteis, as hemácias dos mamíferos são:',
+    op: ['Nucleadas e menores', 'Anucleadas', 'Ausentes na circulação periférica', 'Nucleadas e maiores'],
+    correta: 1, exp: 'A ausência de núcleo aumenta a área disponível para transporte de oxigênio.' },
+  { cat: 'Mamíferos', q: 'Qual grupo de mamíferos é caracterizado pela postura de ovos?',
+    op: ['Marsupiais', 'Placentários', 'Monotremados', 'Roedores'],
+    correta: 2, exp: 'Ornitorrincos e équidnas são exemplos de monotremados.' },
+  { cat: 'Mamíferos', q: 'Os marsupiais se caracterizam por:',
+    op: ['Desenvolvimento completo do feto no útero, com placenta funcional', 'Postura de ovos com casca calcária', 'Desenvolvimento dos filhotes no marsúpio após curta gestação', 'Ausência total de glândulas mamárias'],
+    correta: 2, exp: 'A gestação curta é seguida por um longo período de desenvolvimento dentro do marsúpio.' },
+  { cat: 'Mamíferos', q: 'A adaptação alimentar típica dos tamanduás inclui:',
+    op: ['Dentição especializada para trituração de insetos', 'Língua longa e ausência de dentes', 'Estômago multicompartimentado como ruminantes', 'Bochechas expansíveis para armazenamento de alimento'],
+    correta: 1, exp: 'A língua longa e pegajosa é fundamental para a captura de formigas e cupins.' },
+  { cat: 'Mamíferos', q: 'Qual grupo de mamíferos utiliza ecolocalização como principal estratégia sensorial?',
+    op: ['Primatas', 'Morcegos', 'Roedores', 'Lagomorfos'],
+    correta: 1, exp: 'A maioria dos morcegos emite ultrassons para orientação espacial e localização de presas.' },
+  { cat: 'Mamíferos', q: 'A cecotrofia, observada em lagomorfos e roedores, consiste em:',
+    op: ['Regurgitação do alimento para os filhotes', 'Reingestão de cecotrofos para reaproveitamento de nutrientes produzidos pela microbiota intestinal', 'Fermentação gástrica prévia à ingestão do alimento', 'Digestão exclusivamente enzimática, sem participação microbiana'],
+    correta: 1, exp: 'Esse comportamento permite o aproveitamento de nutrientes e vitaminas produzidos pela fermentação cecal.' },
+  { cat: 'Mamíferos', q: 'A má oclusão dentária é um problema frequentemente observado em:',
+    op: ['Primatas neotropicais', 'Lagomorfos', 'Morcegos frugívoros', 'Tamanduás'],
+    correta: 1, exp: 'Os incisivos de crescimento contínuo dos lagomorfos tornam a espécie propensa a esse problema.' },
+  { cat: 'Mamíferos', q: 'A estase gastrointestinal é definida como:',
+    op: ['Aumento excessivo da motilidade intestinal', 'Redução ou interrupção da motilidade gastrointestinal', 'Inflamação crônica da mucosa intestinal', 'Obstrução mecânica por corpo estranho'],
+    correta: 1, exp: 'É uma condição frequente e potencialmente grave em lagomorfos e roedores.' },
+
+  { cat: 'Mamíferos', q: 'Qual estrutura muscular separa as cavidades torácica e abdominal nos mamíferos?',
+    op: ['Pleura', 'Diafragma', 'Peritônio', 'Mediastino'],
+    correta: 1, exp: 'O diafragma é uma característica exclusiva dos mamíferos entre os vertebrados terrestres.' },
+  { cat: 'Mamíferos', q: 'Os mamíferos placentários se caracterizam por:',
+    op: ['Postura de ovos com casca calcária', 'Desenvolvimento fetal associado à placenta', 'Desenvolvimento completo dos filhotes no marsúpio', 'Ausência de glândulas mamárias funcionais'],
+    correta: 1, exp: 'A placenta permite trocas nutricionais e gasosas prolongadas entre mãe e feto.' },
+  { cat: 'Mamíferos', q: 'Qual grupo de mamíferos apresenta visão estereoscópica altamente desenvolvida?',
+    op: ['Roedores', 'Primatas', 'Lagomorfos', 'Monotremados'],
+    correta: 1, exp: 'A visão estereoscópica favorece a percepção de profundidade, importante para locomoção arbórea e manipulação de objetos.' },
+  { cat: 'Mamíferos', q: 'Qual é o maior roedor do mundo?',
+    op: ['Paca', 'Capivara', 'Cutia', 'Preá'],
+    correta: 1, exp: 'A capivara é uma espécie semiaquática nativa da América do Sul.' },
+  { cat: 'Mamíferos', q: 'Qual característica dentária é típica dos roedores?',
+    op: ['Ausência total de incisivos', 'Incisivos de crescimento contínuo', 'Dentição heterodonte completa desde o nascimento', 'Presença de presas retráteis'],
+    correta: 1, exp: 'O crescimento contínuo exige desgaste constante, geralmente por meio da roeção.' },
+  { cat: 'Mamíferos', q: 'Qual a principal função ecológica das antas?',
+    op: ['Controle de populações de insetos', 'Dispersão de sementes', 'Polinização de plantas nativas', 'Aeração do solo por escavação'],
+    correta: 1, exp: 'Como grandes herbívoros, as antas contribuem significativamente para a regeneração florestal ao dispersar sementes.' },
+  // HEMATOLOGIA
+  { cat: 'Hematologia', q: 'Diferentemente dos mamíferos, as hemácias de aves e répteis são:',
+    op: ['Anucleadas e menores', 'Nucleadas', 'Ausentes na fase adulta', 'Fragmentadas em múltiplos núcleos'],
+    correta: 1, exp: 'A presença de núcleo é uma diferença hematológica marcante em relação aos mamíferos.' },
+  { cat: 'Hematologia', q: 'A célula responsável principalmente pela coagulação sanguínea em aves e répteis é:',
+    op: ['A hemácia', 'O linfócito', 'O trombócito', 'O monócito'],
+    correta: 2, exp: 'Nesses grupos, o trombócito nucleado assume o papel equivalente às plaquetas dos mamíferos.' },
+  { cat: 'Hematologia', q: 'O anticoagulante frequentemente recomendado para amostras sanguíneas de quelônios é:',
+    op: ['EDTA', 'Heparina', 'Citrato de sódio', 'Oxalato de potássio'],
+    correta: 1, exp: 'A heparina é preferida por evitar a hemólise que o EDTA pode causar em algumas espécies de répteis.' },
+  { cat: 'Hematologia', q: 'Em mamíferos, o anticoagulante mais utilizado para hemogramas é:',
+    op: ['Heparina', 'EDTA', 'Fluoreto de sódio', 'Citrato de sódio'],
+    correta: 1, exp: 'O EDTA preserva bem a morfologia celular na maioria dos mamíferos domésticos e silvestres.' },
+  { cat: 'Hematologia', q: 'O volume máximo de sangue que pode ser coletado com segurança de um animal corresponde, em geral, a aproximadamente:',
+    op: ['0,1% do peso corporal', '1% do peso corporal', '5% do peso corporal', '10% do peso corporal'],
+    correta: 1, exp: 'Esse limite ajuda a evitar hipovolemia e complicações associadas à coleta.' },
+  { cat: 'Hematologia', q: 'A principal função da hemácia é:',
+    op: ['Participar da resposta imune inata', 'Transportar oxigênio', 'Atuar na coagulação sanguínea', 'Produzir anticorpos'],
+    correta: 1, exp: 'O transporte de oxigênio ligado à hemoglobina é a função central da hemácia.' },
+  { cat: 'Hematologia', q: 'Por que o EDTA pode não ser o anticoagulante ideal para algumas espécies de répteis, como certos quelônios?',
+    op: ['Porque o EDTA acelera a coagulação nessas espécies', 'Porque pode causar hemólise em algumas espécies', 'Porque o EDTA impede a leitura do hematócrito', 'Porque a heparina é o único anticoagulante compatível com hemácias nucleadas'],
+    correta: 1, exp: 'A hemólise induzida por EDTA em certas espécies compromete a qualidade da amostra.' },
+  { cat: 'Hematologia', q: 'Comparando os três grupos estudados, qual característica hematológica é exclusiva dos mamíferos?',
+    op: ['Presença de trombócitos nucleados', 'Hemácias anucleadas', 'Ausência de leucócitos circulantes', 'Hemácias de formato irregular'],
+    correta: 1, exp: 'Aves, répteis e anfíbios apresentam hemácias nucleadas; os mamíferos, não.' },
+  { cat: 'Hematologia', q: 'Qual célula sanguínea está associada à resposta imune celular, sendo comum a mamíferos, aves e répteis?',
+    op: ['Hemácia', 'Trombócito', 'Linfócito', 'Reticulócito'],
+    correta: 2, exp: 'O linfócito participa da imunidade celular e humoral nos três grupos.' },
+  { cat: 'Hematologia', q: 'Assim como as hemácias, os trombócitos de aves e répteis são:',
+    op: ['Anucleados e fragmentados', 'Nucleados', 'Ausentes na circulação periférica', 'Idênticos às plaquetas dos mamíferos em estrutura'],
+    correta: 1, exp: 'Tanto hemácias quanto trombócitos de aves e répteis mantêm o núcleo, ao contrário do que ocorre em mamíferos.' },
+];
+
+let deck = [...QUESTIONS];
+let atual = 0;
+let respostas = {};
+let erros = [];
+
+function renderizar() {
+  const qz = deck[atual];
+  document.getElementById('quiz-categoria').textContent = qz.cat;
+  document.getElementById('quiz-pergunta').textContent = qz.q;
+
+  const letras = ['A', 'B', 'C', 'D'];
+  const opcoesEl = document.getElementById('quiz-opcoes');
+  opcoesEl.innerHTML = '';
+
+  const jaRespondida = respostas.hasOwnProperty(atual);
+
+  qz.op.forEach((texto, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opcao';
+    btn.innerHTML = `<span class="opcao-letra">${letras[i]}</span><span class="opcao-texto">${texto}</span>`;
+    if (jaRespondida) {
+      btn.classList.add('desabilitada');
+      if (i === qz.correta) btn.classList.add('certa');
+      if (i === respostas[atual].escolha && i !== qz.correta) btn.classList.add('errada');
+    } else {
+      btn.onclick = () => selecionarOpcao(i);
+    }
+    opcoesEl.appendChild(btn);
+  });
+
+  const feedback = document.getElementById('quiz-feedback');
+  if (jaRespondida) {
+    const acertou = respostas[atual].correta;
+    feedback.classList.add('visivel');
+    feedback.classList.toggle('acerto', acertou);
+    feedback.classList.toggle('erro', !acertou);
+    document.getElementById('fb-status').textContent = acertou ? 'Resposta correta.' : 'Resposta incorreta.';
+    document.getElementById('fb-texto').textContent = qz.exp;
+  } else {
+    feedback.classList.remove('visivel', 'acerto', 'erro');
+  }
+
+  atualizarProgresso();
+}
+
+function selecionarOpcao(i) {
+  if (respostas.hasOwnProperty(atual)) return;
+  const qz = deck[atual];
+  const correta = i === qz.correta;
+  respostas[atual] = { escolha: i, correta: correta };
+  if (!correta) erros.push(qz);
+  renderizar();
+}
+
+function atualizarProgresso() {
+  const total = deck.length;
+  const n = atual + 1;
+  const respondidas = Object.keys(respostas).length;
+  const acertos = Object.values(respostas).filter(r => r.correta).length;
+  const errosCount = respondidas - acertos;
+  const pct = total ? Math.round((respondidas / total) * 100) : 0;
+
+  document.getElementById('prog-texto').textContent = n + ' / ' + total;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('cnt-total').textContent = total;
+  document.getElementById('cnt-acertos').textContent = acertos;
+  document.getElementById('cnt-erros').textContent = errosCount;
+  document.getElementById('cnt-restam').textContent = total - respondidas;
+}
+
+function proximo() {
+  if (atual < deck.length - 1) { atual++; renderizar(); }
+}
+
+function anterior() {
+  if (atual > 0) { atual--; renderizar(); }
+}
+
+function embaralhar() {
+  deck = [...deck].sort(() => Math.random() - 0.5);
+  atual = 0; respostas = {}; erros = [];
+  renderizar();
+}
+
+function reiniciar() {
+  atual = 0; respostas = {}; erros = [];
+  renderizar();
+}
+
+function revisarErros() {
+  if (erros.length === 0) { alert('Nenhum erro registrado ainda.'); return; }
+  deck = [...erros];
+  erros = []; atual = 0; respostas = {};
+  renderizar();
+}
+
+function selecionarCat(btn, cat) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('ativo'));
+  btn.classList.add('ativo');
+  deck = cat === 'todas' ? [...QUESTIONS] : QUESTIONS.filter(q => q.cat === cat);
+  atual = 0; respostas = {}; erros = [];
+  renderizar();
+}
+
+document.addEventListener('keydown', e => {
+  const jaRespondida = respostas.hasOwnProperty(atual);
+  if (['1', '2', '3', '4'].includes(e.key) && !jaRespondida) {
+    const i = parseInt(e.key, 10) - 1;
+    if (deck[atual].op[i] !== undefined) selecionarOpcao(i);
+  }
+  if (e.key === 'ArrowRight' || e.key === 'Enter') proximo();
+  if (e.key === 'ArrowLeft') anterior();
+});
+
+renderizar();
+</script>
+
+</body>
+</html>
