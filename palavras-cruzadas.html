@@ -54,7 +54,7 @@
     .msg{margin-top:0.8rem;font-size:0.78rem;color:var(--stone);min-height:1rem;}
     .msg.acerto{color:var(--green-mid);font-weight:500;}
     .msg.erro{color:#8a3030;}
-    @media(max-width:900px){.cw-area{grid-template-columns:1fr;padding:2rem 1rem;}.pistas{max-width:100%;}nav ul{display:none;}.nav-inner{padding:0 1.5rem;}}
+    @media(max-width:900px){.cell-input{font-size:16px;}.cw-area{grid-template-columns:1fr;padding:2rem 1rem;}.pistas{max-width:100%;}nav ul{display:none;}.nav-inner{padding:0 1.5rem;}}
   </style>
 </head>
 <body>
@@ -108,7 +108,7 @@
 <script>
 const TEMAS={"conceitos": {"title": "Conceitos e Conservação", "placements": [{"word": "BIODIVERSIDADE", "dir": "H", "row": 5, "col": 0, "num": 6, "clue": "Variabilidade de organismos vivos, incluindo diversidade genética, de espécies e de ecossistemas."}, {"word": "SINANTROPICA", "dir": "V", "row": 4, "col": 1, "num": 4, "clue": "Espécie adaptada à convivência próxima com populações humanas, sem ter sido domesticada."}, {"word": "INVASORA", "dir": "V", "row": 0, "col": 2, "num": 1, "clue": "Espécie introduzida que causa impactos negativos às espécies nativas e aos ecossistemas."}, {"word": "EXOTICO", "dir": "V", "row": 1, "col": 4, "num": 2, "clue": "Espécie cuja distribuição geográfica natural não inclui o território brasileiro."}, {"word": "TRAFICO", "dir": "V", "row": 4, "col": 7, "num": 5, "clue": "Principal atividade ilegal responsável pela retirada de milhões de animais da natureza."}, {"word": "INSITU", "dir": "V", "row": 3, "col": 8, "num": 3, "clue": "Estratégia de conservação realizada no ambiente natural da espécie."}, {"word": "EXSITU", "dir": "V", "row": 5, "col": 6, "num": 7, "clue": "Estratégia de conservação realizada fora do ambiente natural da espécie."}]}, "anfibios": {"title": "Anfíbios", "placements": [{"word": "QUITRIDIOMICOSE", "dir": "H", "row": 1, "col": 0, "num": 5, "clue": "Doença fúngica associada ao declínio populacional de anfíbios em diversas regiões do mundo."}, {"word": "CUTANEA", "dir": "V", "row": 0, "col": 1, "num": 1, "clue": "Tipo de respiração realizada diretamente através da pele."}, {"word": "BIDDER", "dir": "V", "row": 0, "col": 2, "num": 2, "clue": "Estrutura semelhante a um ovário presente em alguns anuros machos."}, {"word": "UREIA", "dir": "V", "row": 0, "col": 4, "num": 3, "clue": "Principal composto nitrogenado excretado pelos anfíbios adultos."}, {"word": "FEBRE", "dir": "V", "row": 0, "col": 14, "num": 4, "clue": "Resposta adaptativa na qual o animal busca temperaturas mais elevadas durante uma enfermidade."}]}, "mamiferos": {"title": "Mamíferos", "placements": [{"word": "MONOTREMADOS", "dir": "H", "row": 7, "col": 0, "num": 6, "clue": "Grupo de mamíferos que deposita ovos."}, {"word": "CECOTROFIA", "dir": "V", "row": 4, "col": 1, "num": 4, "clue": "Comportamento fisiológico de reingestão de cecotrofos para reaproveitamento nutricional."}, {"word": "DIAFRAGMA", "dir": "V", "row": 0, "col": 0, "num": 1, "clue": "Estrutura muscular que separa as cavidades torácica e abdominal."}, {"word": "PRIMATAS", "dir": "V", "row": 2, "col": 4, "num": 3, "clue": "Grupo de mamíferos que apresenta visão estereoscópica altamente desenvolvida."}, {"word": "CAPIVARA", "dir": "V", "row": 1, "col": 5, "num": 2, "clue": "Maior roedor do mundo."}, {"word": "ESTASE", "dir": "V", "row": 7, "col": 6, "num": 7, "clue": "Alteração caracterizada pela redução da motilidade gastrointestinal."}, {"word": "ANTA", "dir": "V", "row": 6, "col": 2, "num": 5, "clue": "Maior mamífero terrestre nativo do Brasil e importante dispersora de sementes."}]}, "repteis": {"title": "Répteis", "placements": [{"word": "ESTOMATITE", "dir": "H", "row": 3, "col": 0, "num": 5, "clue": "Processo inflamatório e infeccioso da cavidade oral de répteis."}, {"word": "ECDISE", "dir": "V", "row": 3, "col": 0, "num": 5, "clue": "Processo fisiológico periódico de renovação da pele."}, {"word": "DISECDISE", "dir": "V", "row": 1, "col": 1, "num": 2, "clue": "Alteração caracterizada pela troca incompleta ou anormal da pele."}, {"word": "URATO", "dir": "V", "row": 0, "col": 2, "num": 1, "clue": "Principal composto nitrogenado excretado pelos répteis."}, {"word": "FOSSETA", "dir": "V", "row": 2, "col": 3, "num": 3, "clue": "Estrutura sensorial capaz de detectar radiação infravermelha emitida por fontes de calor."}, {"word": "UVB", "dir": "H", "row": 0, "col": 2, "num": 1, "clue": "Faixa do espectro luminoso necessária para síntese de vitamina D3."}, {"word": "JACOBSON", "dir": "V", "row": 2, "col": 5, "num": 4, "clue": "Órgão responsável pela percepção química de partículas transportadas pela língua."}]}, "aves": {"title": "Aves", "placements": [{"word": "ASPERGILLUS", "dir": "H", "row": 7, "col": 0, "num": 6, "clue": "Gênero fúngico mais frequentemente associado à aspergilose aviária."}, {"word": "UROPIGIANA", "dir": "V", "row": 0, "col": 0, "num": 1, "clue": "Glândula localizada próxima à base da cauda responsável pela manutenção das penas."}, {"word": "RETRIZES", "dir": "V", "row": 0, "col": 1, "num": 2, "clue": "Penas localizadas na cauda, importantes para direção e estabilidade durante o voo."}, {"word": "SIRINGE", "dir": "V", "row": 1, "col": 3, "num": 3, "clue": "Estrutura localizada na bifurcação da traqueia responsável pela vocalização."}, {"word": "INGLUVIO", "dir": "V", "row": 5, "col": 5, "num": 5, "clue": "Dilatação do esôfago utilizada para armazenamento temporário de alimento."}, {"word": "MOELA", "dir": "V", "row": 4, "col": 7, "num": 4, "clue": "Compartimento muscular responsável pela trituração mecânica do alimento."}, {"word": "PBFD", "dir": "V", "row": 7, "col": 2, "num": 7, "clue": "Doença viral caracterizada por alterações de penas e deformidades de bico em psitacídeos."}]}, "hematologia": {"title": "Hematologia", "placements": [{"word": "ANUCLEADAS", "dir": "H", "row": 6, "col": 0, "num": 6, "clue": "Característica das hemácias dos mamíferos."}, {"word": "TROMBOCITO", "dir": "V", "row": 0, "col": 3, "num": 2, "clue": "Célula envolvida na coagulação sanguínea de aves e répteis."}, {"word": "NUCLEADAS", "dir": "V", "row": 1, "col": 0, "num": 3, "clue": "Característica das hemácias de aves, répteis e anfíbios."}, {"word": "HEPARINA", "dir": "V", "row": 0, "col": 1, "num": 1, "clue": "Anticoagulante frequentemente recomendado para quelônios."}, {"word": "HEMACIA", "dir": "V", "row": 5, "col": 5, "num": 5, "clue": "Célula sanguínea responsável pelo transporte de oxigênio."}, {"word": "EDTA", "dir": "V", "row": 3, "col": 6, "num": 4, "clue": "Anticoagulante frequentemente utilizado em mamíferos."}]}};
 
-let temaAtual=null, letterMap={}, numPos={};
+let temaAtual=null, letterMap={}, numPos={}, dirAtual='H';
 
 function trocarTema(tema){
   document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('ativo'));
@@ -149,22 +149,28 @@ function renderCrossword(data){
           n.className='cell-num'; n.textContent=numPos[key]; div.appendChild(n);
         }
         const inp=document.createElement('input');
-        inp.type='text'; inp.maxLength=1; inp.className='cell-input';
+        inp.type='text'; inp.className='cell-input';
+        inp.autocomplete='off'; inp.spellcheck=false;
+        inp.setAttribute('autocorrect','off'); inp.setAttribute('autocapitalize','characters');
         inp.dataset.key=key; inp.dataset.answer=letterMap[key];
         inp.addEventListener('input',e=>{
-          e.target.value=e.target.value.toUpperCase().slice(-1);
+          e.target.value=e.target.value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z]/g,'').slice(-1);
           e.target.parentElement.classList.remove('correta','errada');
           document.getElementById('msg').textContent='';
           if(e.target.value) autoNext(r,c);
         });
         inp.addEventListener('keydown',e=>{
           if(e.key==='Backspace'&&!e.target.value) autoPrev(r,c);
-          if(e.key==='ArrowRight'){e.preventDefault();focusCell(r,c+1);}
-          if(e.key==='ArrowLeft'){e.preventDefault();focusCell(r,c-1);}
-          if(e.key==='ArrowDown'){e.preventDefault();focusCell(r+1,c);}
-          if(e.key==='ArrowUp'){e.preventDefault();focusCell(r-1,c);}
+          if(e.key==='ArrowRight'){e.preventDefault();dirAtual='H';focusCell(r,c+1);}
+          if(e.key==='ArrowLeft'){e.preventDefault();dirAtual='H';focusCell(r,c-1);}
+          if(e.key==='ArrowDown'){e.preventDefault();dirAtual='V';focusCell(r+1,c);}
+          if(e.key==='ArrowUp'){e.preventDefault();dirAtual='V';focusCell(r-1,c);}
         });
         inp.addEventListener('focus',()=>highlight(r,c));
+        // tocar de novo numa casa de cruzamento troca entre horizontal e vertical
+        inp.addEventListener('mousedown',()=>{
+          if(document.activeElement===inp&&palavrasDe(r,c).length>1){dirAtual=dirAtual==='H'?'V':'H';highlight(r,c);}
+        });
         div.appendChild(inp);
       } else {
         div.classList.add('cell-vazia');
@@ -178,7 +184,7 @@ function renderCrossword(data){
     const div=document.createElement('div');
     div.className='pista-item'; div.dataset.num=p.num; div.dataset.dir=p.dir;
     div.innerHTML=`<span class="pista-num">${p.num}.</span><span class="pista-texto">${p.clue}</span>`;
-    div.addEventListener('click',()=>focusCell(p.row,p.col));
+    div.addEventListener('click',()=>{dirAtual=p.dir;focusCell(p.row,p.col);highlight(p.row,p.col);});
     (p.dir==='H'?ph:pv).appendChild(div);
   });
 }
@@ -189,34 +195,39 @@ function focusCell(r,c){
 }
 
 function autoNext(r,c){
-  if(letterMap[r+','+(c+1)]) focusCell(r,c+1);
-  else if(letterMap[(r+1)+','+c]) focusCell(r+1,c);
+  if(dirAtual==='H'&&letterMap[r+','+(c+1)]) focusCell(r,c+1);
+  else if(dirAtual==='V'&&letterMap[(r+1)+','+c]) focusCell(r+1,c);
 }
 
 function autoPrev(r,c){
-  if(letterMap[r+','+(c-1)]) focusCell(r,c-1);
-  else if(letterMap[(r-1)+','+c]) focusCell(r-1,c);
+  if(dirAtual==='H'&&letterMap[r+','+(c-1)]) focusCell(r,c-1);
+  else if(dirAtual==='V'&&letterMap[(r-1)+','+c]) focusCell(r-1,c);
+}
+
+function palavrasDe(r,c){
+  return TEMAS[temaAtual].placements.filter(p=>
+    p.dir==='H' ? (p.row===r&&c>=p.col&&c<p.col+p.word.length)
+                : (p.col===c&&r>=p.row&&r<p.row+p.word.length));
 }
 
 function highlight(r,c){
   document.querySelectorAll('.cell-letra').forEach(el=>el.classList.remove('destacada'));
   document.querySelectorAll('.pista-item').forEach(el=>el.classList.remove('ativa'));
-  const data=TEMAS[temaAtual];
-  const p=data.placements.find(p=>{
-    for(let i=0;i<p.word.length;i++){
-      const pr=p.dir==='H'?p.row:p.row+i, pc=p.dir==='H'?p.col+i:p.col;
-      if(pr===r&&pc===c) return true;
-    }
-    return false;
-  });
-  if(!p) return;
+  const palavras=palavrasDe(r,c);
+  if(!palavras.length) return;
+  if(!palavras.some(w=>w.dir===dirAtual)) dirAtual=palavras[0].dir;
+  const p=palavras.find(w=>w.dir===dirAtual);
   for(let i=0;i<p.word.length;i++){
     const pr=p.dir==='H'?p.row:p.row+i, pc=p.dir==='H'?p.col+i:p.col;
     const cell=document.querySelector(`.cell-letra[data-key="${pr},${pc}"]`);
     if(cell) cell.classList.add('destacada');
   }
   const pista=document.querySelector(`.pista-item[data-num="${p.num}"][data-dir="${p.dir}"]`);
-  if(pista){pista.classList.add('ativa');pista.scrollIntoView({block:'nearest'});}
+  if(pista){
+    pista.classList.add('ativa');
+    // no celular as dicas ficam abaixo da grade: rolar até elas faria a página pular a cada letra
+    if(window.matchMedia('(min-width:901px)').matches) pista.scrollIntoView({block:'nearest'});
+  }
 }
 
 function verificar(){
